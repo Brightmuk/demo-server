@@ -13,6 +13,8 @@
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express.js": "^1.0.0"
+    "drachtio-srf": "^4.5.42",
+    "express.js": "^1.0.0",
+    "ws": "^8.18.1"
   }
 }
