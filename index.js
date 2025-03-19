@@ -61,10 +61,10 @@ function handleRegister(ws, headers) {
             `Contact: ${sipUri}\r\n` +
             `Expires: 3600\r\n` +
             `Content-Length: 0\r\n\r\n`);
-
+      console.log("CLients",clients);
   // 📌 Schedule a check in 10 seconds
   setTimeout(() => {
-    checkUserConnection(sipUri);
+    checkUserConnection(username);
   }, 10000);
 
     console.log(`✅ User Registered: ${username} (${sipUri})\n`);
@@ -156,14 +156,30 @@ function parseSIPHeaders(sipMessage) {
 
     return headers;
 }
+
 // 📌 Function to check if the user is still connected
-function checkUserConnection(contact) {
-  const client = clients.get(contact);
-  
+function checkUserConnection(username) {
+  const client = clients.get(username);
+  console.log("Got client: ",username);
   if (!client || client.ws.readyState !== WebSocket.OPEN) {
-      console.log(`⚠️ User ${contact} is no longer connected. Removing from registry.`);
-      clients.delete(contact);
-  } else {
-      console.log(`✅ User ${contact} is still connected.`);
+      console.log(`❌ User ${username} is not connected. Deregistering...`);
+      clients.delete(username);
+      return;
   }
+
+  console.log(`🔄 Checking connection for ${username}...`);
+  
+  // Send a PING message
+  client.ws.send(JSON.stringify({ type: "PING" }), (err) => {
+      if (err) {
+          console.log(`⚠️ Error sending PING to ${username}. Removing from registry.`);
+          clients.delete(username);
+      } else {
+          console.log(`✅ User ${username} is still connected.`);
+      }
+  });
+
+  // Schedule another check after 10 seconds
+  setTimeout(() => checkUserConnection(username), 10000);
 }
+
