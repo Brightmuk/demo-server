@@ -99,12 +99,14 @@ function handleInvite(ws, headers) {
   console.log(`📞 Call request from ${from} to ${to}`);
 
   // Ensure Contact Header is properly formatted
-  const contact = `sip:${calleeUsername}@server`;
+  //Now we hardcode the value of the ip address
+  const contact = `sip:${calleeUsername}@s91de-43-228-226-5.ngrok-free.app`;
+  console.log(`\nCONTACT VALUE: ${contact}\n`);
 
-  // Basic SDP Offer
+  // Basic SDP Offer 
   const sdpBody = `v=0
     o=- 0 0 IN IP4 127.0.0.1
-    s=Call Session
+    s=Call Session 
     c=IN IP4 127.0.0.1
     t=0 0
     m=audio 7078 RTP/AVP 0 101
