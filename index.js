@@ -12,84 +12,120 @@ wss.on('connection', (ws) => {
     console.log("✅ New WebSocket connection established");
 
     ws.on('message', (message) => {
-      // Convert Buffer to string
-      const msgStr = message.toString('utf-8');  
-      console.log("📩 Raw SIP Message:\n", msgStr);
-  
-      // Check if it's a REGISTER message
-      if (msgStr.startsWith("REGISTER")) {
-          handleRegister(ws, msgStr);
-      } else if (msgStr.startsWith("INVITE")) {
-          handleInvite(ws, msgStr);
-      } else if (msgStr.startsWith("BYE")) {
-          handleBye(ws, msgStr);
-      } else {
-          console.log("⚠️ Unrecognized SIP message type");
-      }
-  });
+        // Convert Buffer to string
+        const msgStr = message.toString('utf-8');  
+        console.log("📩 Raw SIP Message:\n", msgStr);
+
+        // Parse SIP headers
+        const headers = parseSIPHeaders(msgStr);
+
+        // Determine SIP message type and handle accordingly
+        if (msgStr.startsWith("REGISTER")) {
+            handleRegister(ws, headers);
+        } else if (msgStr.startsWith("INVITE")) {
+            handleInvite(ws, headers);
+        } else if (msgStr.startsWith("BYE")) {
+            handleBye(ws, headers);
+        } else {
+            console.log("⚠️ Unrecognized SIP message type");
+        }
+    });
 
     ws.on('close', () => {
         console.log("❌ WebSocket connection closed");
     });
 });
 
-function handleRegister(ws, msg) {
-    if (!msg.sip_uri || !msg.username) {
+function handleRegister(ws, headers) {
+    const sipUri = headers["Contact"];
+    const username = headers["From"] ? headers["From"].match(/sip:(\d+)@/)?.[1] : null;
+
+    if (!sipUri || !username) {
+        console.log("⚠️ Invalid registration request");
         return ws.send(JSON.stringify({ status: 400, message: "Bad Request: Missing SIP URI or username" }));
     }
 
-    clients.set(msg.username, { ws, sip_uri: msg.sip_uri });
+    clients.set(username, { ws, sip_uri: sipUri });
 
-    ws.send(JSON.stringify({
-        type: '200 OK',
-        status: 200,
-        message: "Registered Successfully",
-        headers: {
-            'Contact': '<sip:sip@10.0.2.2>;+sip.ice;reg-id=1;+sip.instance="<urn:uuid:d725a987-7d83-493e-8564-aecc94050dab>";expires=600',
-            'Expires': 3600,
-            'Call-ID': uuidv4(),
-            'CSeq': '1 REGISTER'
-        }
-    }));
+    ws.send(`SIP/2.0 200 OK\r\n` +
+            `Via: ${headers["Via"]}\r\n` +
+            `To: ${headers["To"]}\r\n` +
+            `From: ${headers["From"]}\r\n` +
+            `Call-ID: ${headers["Call-ID"]}\r\n` +
+            `CSeq: ${headers["CSeq"]}\r\n` +
+            `Contact: ${sipUri}\r\n` +
+            `Expires: 3600\r\n` +
+            `Content-Length: 0\r\n\r\n`);
 
-    console.log(`✅ User Registered: ${msg.username} (${msg.sip_uri})`);
+    console.log(`✅ User Registered: ${username} (${sipUri})`);
 }
 
-function handleInvite(ws, msg) {
-    if (!msg.from || !msg.to) {
-        return ws.send(JSON.stringify({ status: 400, message: "Bad Request: Missing 'from' or 'to' fields" }));
+function handleInvite(ws, headers) {
+    const from = headers["From"];
+    const to = headers["To"];
+    const callId = headers["Call-ID"];
+
+    if (!from || !to || !callId) {
+        return ws.send(JSON.stringify({ status: 400, message: "Bad Request: Missing required headers" }));
     }
 
-    const callee = clients.get(msg.to);
+    const calleeUsername = to.match(/sip:(\d+)@/)?.[1];
+    const callee = clients.get(calleeUsername);
+
     if (!callee) {
-        return ws.send(JSON.stringify({ status: 404, message: "User not found" }));
+        return ws.send(`SIP/2.0 404 Not Found\r\n` +
+                       `Via: ${headers["Via"]}\r\n` +
+                       `To: ${headers["To"]}\r\n` +
+                       `From: ${headers["From"]}\r\n` +
+                       `Call-ID: ${callId}\r\n` +
+                       `CSeq: ${headers["CSeq"]}\r\n` +
+                       `Content-Length: 0\r\n\r\n`);
     }
 
-    console.log(`📞 Call request from ${msg.from} to ${msg.to}`);
+    console.log(`📞 Call request from ${from} to ${to}`);
 
-    callee.ws.send(JSON.stringify({
-        type: 'INVITE',
-        from: msg.from,
-        to: msg.to,
-        headers: {
-            'Call-ID': uuidv4(),
-            'CSeq': '1 INVITE',
-            'Contact': callee.sip_uri
-        }
-    }));
+    callee.ws.send(`INVITE sip:${calleeUsername}@server SIP/2.0\r\n` +
+                   `Via: ${headers["Via"]}\r\n` +
+                   `To: ${headers["To"]}\r\n` +
+                   `From: ${headers["From"]}\r\n` +
+                   `Call-ID: ${callId}\r\n` +
+                   `CSeq: ${headers["CSeq"]}\r\n` +
+                   `Contact: ${callee.sip_uri}\r\n` +
+                   `Content-Length: 0\r\n\r\n`);
 
-    ws.send(JSON.stringify({
-        type: '100 TRYING',
-        status: 100,
-        message: "Trying..."
-    }));
+    ws.send(`SIP/2.0 100 TRYING\r\n` +
+            `Via: ${headers["Via"]}\r\n` +
+            `To: ${headers["To"]}\r\n` +
+            `From: ${headers["From"]}\r\n` +
+            `Call-ID: ${callId}\r\n` +
+            `CSeq: ${headers["CSeq"]}\r\n` +
+            `Content-Length: 0\r\n\r\n`);
 }
 
-function handleBye(ws, msg) {
-    console.log(`🚫 Call ended: ${msg.call_id}`);
-    ws.send(JSON.stringify({
-        type: '200 OK',
-        status: 200,
-        message: "Call ended successfully"
-    }));
+function handleBye(ws, headers) {
+    console.log(`🚫 Call ended: ${headers["Call-ID"]}`);
+
+    ws.send(`SIP/2.0 200 OK\r\n` +
+            `Via: ${headers["Via"]}\r\n` +
+            `To: ${headers["To"]}\r\n` +
+            `From: ${headers["From"]}\r\n` +
+            `Call-ID: ${headers["Call-ID"]}\r\n` +
+            `CSeq: ${headers["CSeq"]}\r\n` +
+            `Content-Length: 0\r\n\r\n`);
+}
+
+function parseSIPHeaders(sipMessage) {
+    const headers = {};
+    const lines = sipMessage.split("\n");
+
+    for (const line of lines) {
+        const match = line.match(/^([\w-]+):\s*(.*)/);
+        if (match) {
+            const header = match[1].trim();
+            const value = match[2].trim();
+            headers[header] = value;
+        }
+    }
+
+    return headers;
 }
