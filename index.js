@@ -74,7 +74,7 @@ function handleRegister(ws, headers) {
 }
 
 function handleInvite(ws, headers) {
-  console.log("Handling Invite...")
+  console.log("Handling Invite...");
   const from = headers["From"];
   const to = headers["To"];
   const callId = headers["Call-ID"];
@@ -98,14 +98,33 @@ function handleInvite(ws, headers) {
 
   console.log(`📞 Call request from ${from} to ${to}`);
 
-  callee.ws.send(`INVITE sip:${calleeUsername}@server SIP/2.0\r\n` +
+  // Ensure Contact Header is properly formatted
+  const contact = `sip:${calleeUsername}@server`;
+
+  // Basic SDP Offer
+  const sdpBody = `v=0
+    o=- 0 0 IN IP4 127.0.0.1
+    s=Call Session
+    c=IN IP4 127.0.0.1
+    t=0 0
+    m=audio 7078 RTP/AVP 0 101
+    a=rtpmap:0 PCMU/8000
+    a=rtpmap:101 telephone-event/8000
+    a=fmtp:101 0-16`;
+
+  const inviteMessage =
+    `INVITE sip:${calleeUsername}@server SIP/2.0\r\n` +
     `Via: ${headers["Via"]}\r\n` +
     `To: ${headers["To"]}\r\n` +
     `From: ${headers["From"]}\r\n` +
     `Call-ID: ${callId}\r\n` +
     `CSeq: ${headers["CSeq"]}\r\n` +
-    `Contact: ${callee.sip_uri}\r\n` +
-    `Content-Length: 0\r\n\r\n`);
+    `Contact: ${contact}\r\n` +
+    `Content-Type: application/sdp\r\n` +
+    `Content-Length: ${sdpBody.length}\r\n\r\n` +
+    sdpBody;
+
+  callee.ws.send(inviteMessage);
 
   ws.send(`SIP/2.0 100 TRYING\r\n` +
     `Via: ${headers["Via"]}\r\n` +
@@ -114,8 +133,10 @@ function handleInvite(ws, headers) {
     `Call-ID: ${callId}\r\n` +
     `CSeq: ${headers["CSeq"]}\r\n` +
     `Content-Length: 0\r\n\r\n`);
+
   console.log("Handling Invite done...\n");
 }
+
 
 function handleBye(ws, headers) {
   console.log(`🚫 Call ended: ${headers["Call-ID"]}`);
