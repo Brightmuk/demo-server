@@ -1,6 +1,5 @@
 const WebSocket = require('ws');
-const { parseSIPHeaders, checkUserConnection, handleSIPResponse } = require('./utils');
-
+const { parseSIPHeaders, checkUserConnection, handleSIPResponse, extractSDP } = require('./utils');
 
 const PORT = 5066;
 const wss = new WebSocket.Server({ port: PORT });
@@ -13,25 +12,25 @@ wss.on('connection', (ws) => {
   console.log("✅ New WebSocket connection established");
 
   ws.on('message', (message) => {
-    // Convert Buffer to string
     const msgStr = message.toString('utf-8');
     console.log("-------------------------------------------");
     console.log("📩 Raw SIP Message:\n", msgStr);
 
-    // Parse SIP headers
     const headers = parseSIPHeaders(msgStr);
-
-    // Determine SIP message type and handle accordingly
+    const sdpBody = extractSDP(msgStr); // Extract SDP body if present
+    const firstLine = msgStr.split("\n")[0];
+    
+    
     if (msgStr.startsWith("REGISTER")) {
       handleRegister(ws, headers);
     } else if (msgStr.startsWith("INVITE")) {
-      handleInvite(ws, headers);
+      handleInvite(ws, headers, sdpBody);
     } else if (msgStr.startsWith("BYE")) {
       handleBye(ws, headers);
-    } else if (msgStr.startsWith("CANCEL")) {
+    } else if (msgStr.startsWith("CANCEL")||firstLine.includes("603 Decline")) {
       handleCancel(ws, headers);
     } else if (msgStr.startsWith("SIP/2.0")) {
-      handleSIPResponse(ws, msgStr);
+      handleSIPResponse(ws, msgStr, headers);
     } else {
       console.log("⚠️ Unrecognized SIP message type");
     }
@@ -44,7 +43,7 @@ wss.on('connection', (ws) => {
 });
 
 function handleRegister(ws, headers) {
-  console.log("Handling Register...")
+  console.log("Handling Register...");
   const sipUri = headers["Contact"];
   const username = headers["From"] ? headers["From"].match(/sip:(\d+)@/)?.[1] : null;
 
@@ -65,22 +64,17 @@ function handleRegister(ws, headers) {
     `Expires: 3600\r\n` +
     `Content-Length: 0\r\n\r\n`);
 
-  // 📌 Schedule a check in 10 seconds
-  // setTimeout(() => {
-  //   checkUserConnection(username);
-  // }, 10000);
-
   console.log(`✅ User Registered: ${username} (${sipUri})\n`);
 }
 
-function handleInvite(ws, headers) {
-  console.log("Handling Invite...");
+function handleInvite(ws, headers, sdpBody) {
+  console.log("📞 Handling Invite...");
   const from = headers["From"];
   const to = headers["To"];
   const callId = headers["Call-ID"];
 
-  if (!from || !to || !callId) {
-    return ws.send(JSON.stringify({ status: 400, message: "Bad Request: Missing required headers" }));
+  if (!from || !to || !callId || !sdpBody) {
+    return ws.send(JSON.stringify({ status: 400, message: "Bad Request: Missing required headers or SDP" }));
   }
 
   const calleeUsername = to.match(/sip:(\d+)@/)?.[1];
@@ -96,23 +90,10 @@ function handleInvite(ws, headers) {
       `Content-Length: 0\r\n\r\n`);
   }
 
-  console.log(`📞 Call request from ${from} to ${to}`);
+  console.log(`📞 Forwarding call request from ${from} to ${to}`);
 
-  // Ensure Contact Header is properly formatted
-  //Now we hardcode the value of the ip address
   const contact = `sip:${calleeUsername}@s91de-43-228-226-5.ngrok-free.app`;
   console.log(`\nCONTACT VALUE: ${contact}\n`);
-
-  // Basic SDP Offer 
-  const sdpBody = `v=0
-    o=- 0 0 IN IP4 127.0.0.1
-    s=Call Session 
-    c=IN IP4 127.0.0.1
-    t=0 0
-    m=audio 7078 RTP/AVP 0 101
-    a=rtpmap:0 PCMU/8000
-    a=rtpmap:101 telephone-event/8000
-    a=fmtp:101 0-16`;
 
   const inviteMessage =
     `INVITE sip:${calleeUsername}@server SIP/2.0\r\n` +
@@ -124,7 +105,7 @@ function handleInvite(ws, headers) {
     `Contact: ${contact}\r\n` +
     `Content-Type: application/sdp\r\n` +
     `Content-Length: ${sdpBody.length}\r\n\r\n` +
-    sdpBody;
+    sdpBody;  // ✅ Forward SDP without modification
 
   callee.ws.send(inviteMessage);
 
@@ -136,8 +117,10 @@ function handleInvite(ws, headers) {
     `CSeq: ${headers["CSeq"]}\r\n` +
     `Content-Length: 0\r\n\r\n`);
 
-  console.log("Handling Invite done...\n");
+  console.log("📞 Invite forwarded successfully.\n");
 }
+
+
 
 
 function handleBye(ws, headers) {
@@ -151,27 +134,23 @@ function handleBye(ws, headers) {
     `CSeq: ${headers["CSeq"]}\r\n` +
     `Content-Length: 0\r\n\r\n`);
 }
+
 function handleCancel(ws, headers) {
+  
   const callId = headers["Call-ID"];
 
   console.log(`🚫 Call Canceled: ${callId}`);
 
-  // Send 200 OK for CANCEL request
-  const response = `SIP/2.0 200 OK\r\n` +
+  ws.send(`SIP/2.0 200 OK\r\n` +
     `Via: ${headers["Via"]}\r\n` +
     `To: ${headers["To"]}\r\n` +
     `From: ${headers["From"]}\r\n` +
     `Call-ID: ${callId}\r\n` +
     `CSeq: ${headers["CSeq"]}\r\n` +
-    `Content-Length: 0\r\n\r\n`;
-
-  ws.send(response);
-
+    `Content-Length: 0\r\n\r\n`);
 }
 
-
-
-
-
-
-
+//a=rtpmap:110 telephone-event/48000
+// a=rtpmap:126 telephone-event/8000
+// a=ssrc:3458173155 cname:UJlego4IBZj91pPd
+// a=ssrc:3458173155 msid:0a90be72-ffc4-4f61-96fd-1ed38565bf4a 893716b0-f35e-46bc-bf7e-bd4c45c6d1d0
