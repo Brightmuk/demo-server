@@ -77,37 +77,9 @@ function handleInvite(ws, headers, sdpBody) {
   }
 
   const calleeUsername = to.match(/sip:(\d+)@/)?.[1];
-  const callee = clients.get(calleeUsername);
+  let callee = clients.get(calleeUsername);
 
-  if (!callee) {
-    return ws.send(`SIP/2.0 404 Not Found\r\n` +
-      `Via: ${headers["Via"]}\r\n` +
-      `To: ${headers["To"]}\r\n` +
-      `From: ${headers["From"]}\r\n` +
-      `Call-ID: ${callId}\r\n` +
-      `CSeq: ${headers["CSeq"]}\r\n` +
-      `Content-Length: 0\r\n\r\n`);
-  }
-
-  console.log(`📞 Forwarding call request from ${from} to ${to}`);
-
-  const contact = `sip:${calleeUsername}@s91de-43-228-226-5.ngrok-free.app`;
-  console.log(`\nCONTACT VALUE: ${contact}\n`);
-
-  const inviteMessage =
-    `INVITE sip:${calleeUsername}@server SIP/2.0\r\n` +
-    `Via: ${headers["Via"]}\r\n` +
-    `To: ${headers["To"]}\r\n` +
-    `From: ${headers["From"]}\r\n` +
-    `Call-ID: ${callId}\r\n` +
-    `CSeq: ${headers["CSeq"]}\r\n` +
-    `Contact: ${contact}\r\n` +
-    `Content-Type: application/sdp\r\n` +
-    `Content-Length: ${sdpBody.length}\r\n\r\n` +
-    sdpBody;  
-
-  callee.ws.send(inviteMessage);
-
+  // Send 100 TRYING immediately
   ws.send(`SIP/2.0 100 TRYING\r\n` +
     `Via: ${headers["Via"]}\r\n` +
     `To: ${headers["To"]}\r\n` +
@@ -116,12 +88,60 @@ function handleInvite(ws, headers, sdpBody) {
     `CSeq: ${headers["CSeq"]}\r\n` +
     `Content-Length: 0\r\n\r\n`);
 
-  console.log(`📞 Invite forwarded successfully.\n SDP: ${sdpBody}\n`);
+  console.log(`📞 Sent 100 TRYING...`);
+
+  if (!callee) {
+    console.log(`🚫 Callee not available. Waiting for 10 seconds...`);
+
+    // Wait for 10 seconds to check again
+    setTimeout(() => {
+      callee = clients.get(calleeUsername); // Re-check availability
+
+      if (!callee) {
+        console.log(`🚫 Callee still unavailable after 10 seconds. Sending 480.`);
+        return ws.send(`SIP/2.0 480 Temporarily Unavailable\r\n` +
+          `Retry-After: 30\r\n` +
+          `Via: ${headers["Via"]}\r\n` +
+          `To: ${headers["To"]}\r\n` +
+          `From: ${headers["From"]}\r\n` +
+          `Call-ID: ${callId}\r\n` +
+          `CSeq: ${headers["CSeq"]}\r\n` +
+          `Content-Length: 0\r\n\r\n`);
+      }
+
+      console.log(`📞 Callee became available. Proceeding with call.`);
+      forwardInvite(ws, headers, sdpBody, calleeUsername);
+    }, 10000); // 10 seconds timeout
+  } else {
+    console.log(`📞 Callee is available. Forwarding the call immediately.`);
+    forwardInvite(ws, headers, sdpBody, calleeUsername);
+  }
+}
+
+function forwardInvite(ws, headers, sdpBody, calleeUsername) {
+  const callee = clients.get(calleeUsername);
+  if (!callee) return; // Ensure callee is still connected before sending invite
+
+  const contact = `sip:${calleeUsername}@s91de-43-228-226-5.ngrok-free.app`;
+  const inviteMessage =
+    `INVITE sip:${calleeUsername}@server SIP/2.0\r\n` +
+    `Via: ${headers["Via"]}\r\n` +
+    `To: ${headers["To"]}\r\n` +
+    `From: ${headers["From"]}\r\n` +
+    `Call-ID: ${headers["Call-ID"]}\r\n` +
+    `CSeq: ${headers["CSeq"]}\r\n` +
+    `Contact: ${contact}\r\n` +
+    `Content-Type: application/sdp\r\n` +
+    `Content-Length: ${sdpBody.length}\r\n\r\n` +
+    sdpBody;
+
+  callee.ws.send(inviteMessage);
+  console.log(`📞 Invite forwarded successfully to ${calleeUsername}`);
 }
 
 
 
-
+ 
 function handleBye(ws, headers) {
   console.log(`🚫 Call ended: ${headers["Call-ID"]}`);
 
@@ -131,13 +151,13 @@ function handleBye(ws, headers) {
     `From: ${headers["From"]}\r\n` +
     `Call-ID: ${headers["Call-ID"]}\r\n` +
     `CSeq: ${headers["CSeq"]}\r\n` +
-    `Content-Length: 0\r\n\r\n`);
+    `Content-Length: 0\r\n\r\n`); 
 }
 
-function handleCancel(ws, headers) {
+function handleCancel(ws, headers) { 
   const callId = headers["Call-ID"];
-  console.log(`🚫 Call Canceled: ${callId}`);
-
+  console.log(`🚫 Call Canceled: ${callId}`);  
+ 
   // Extract the caller's and callee's SIP URIs
   const fromUser = headers["From"].match(/sip:(\d+)@/)?.[1];
   const toUser = headers["To"].match(/sip:(\d+)@/)?.[1];
@@ -157,7 +177,7 @@ function handleCancel(ws, headers) {
   // Notify the callee with a 487 Request Terminated response
   if (toUser && clients.has(toUser)) {
     const callee = clients.get(toUser);
-    const terminatedResponse =
+    const terminatedResponse = 
       `SIP/2.0 487 Request Terminated\r\n` +
       `Via: ${headers["Via"]}\r\n` +
       `To: ${headers["To"]}\r\n` +
