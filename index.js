@@ -111,13 +111,13 @@ function handleInvite(ws, headers, sdpBody) {
 
       console.log(`📞 Callee became available. Proceeding with call.`);
       forwardInvite(ws, headers, sdpBody, calleeUsername);
-    }, 10000); // 10 seconds timeout
+    }, 20000); // 20 seconds timeout
   } else {
     console.log(`📞 Callee is available. Forwarding the call immediately.`);
-    forwardInvite(ws, headers, sdpBody, calleeUsername);
+    forwardInvite(ws, headers, sdpBody, calleeUsername); 
   }
-}
-
+}  
+ 
 function forwardInvite(ws, headers, sdpBody, calleeUsername) {
   const callee = clients.get(calleeUsername);
   if (!callee) return; // Ensure callee is still connected before sending invite
@@ -143,16 +143,37 @@ function forwardInvite(ws, headers, sdpBody, calleeUsername) {
 
  
 function handleBye(ws, headers) {
-  console.log(`🚫 Call ended: ${headers["Call-ID"]}`);
+  console.log("📞 Handling BYE...");
+  const from = headers["From"];
+  const to = headers["To"];
+  const callId = headers["Call-ID"];
 
-  ws.send(`SIP/2.0 200 OK\r\n` +
-    `Via: ${headers["Via"]}\r\n` +
-    `To: ${headers["To"]}\r\n` +
-    `From: ${headers["From"]}\r\n` +
-    `Call-ID: ${headers["Call-ID"]}\r\n` +
-    `CSeq: ${headers["CSeq"]}\r\n` +
-    `Content-Length: 0\r\n\r\n`); 
+  if (!from || !to || !callId) {
+      return ws.send(JSON.stringify({ status: 400, message: "Bad Request: Missing required headers" }));
+  }
+
+  const otherUserUsername = to.match(/sip:(\d+)@/)?.[1];
+  const otherUser = clients.get(otherUserUsername);
+
+  if (!otherUser) {
+      console.log("🚫 Other party not found, but ending call.");
+      return;
+  }
+
+  const byeMessage = 
+      `BYE sip:${otherUserUsername}@server SIP/2.0\r\n` +
+      `Via: ${headers["Via"]}\r\n` +
+      `To: ${headers["To"]}\r\n` +
+      `From: ${headers["From"]}\r\n` +
+      `Call-ID: ${callId}\r\n` +
+      `CSeq: ${headers["CSeq"]}\r\n` +
+      `Content-Length: 0\r\n\r\n`;
+
+  otherUser.ws.send(byeMessage);
+  console.log("📞 BYE sent to the other party.");
 }
+
+
 
 function handleCancel(ws, headers) { 
   const callId = headers["Call-ID"];
@@ -171,14 +192,14 @@ function handleCancel(ws, headers) {
     `CSeq: ${headers["CSeq"]}\r\n` +
     `Content-Length: 0\r\n\r\n`;
 
-  ws.send(response);
+  ws.send(response);   
   console.log(`✅ Sent 200 OK to acknowledge CANCEL from ${fromUser}`);
 
   // Notify the callee with a 487 Request Terminated response
-  if (toUser && clients.has(toUser)) {
-    const callee = clients.get(toUser);
+  if (toUser && clients.has(fromUser)) {
+    const callee = clients.get(fromUser); 
     const terminatedResponse = 
-      `SIP/2.0 487 Request Terminated\r\n` +
+      `SIP/2.0 487 Request Terminated\r\n` + 
       `Via: ${headers["Via"]}\r\n` +
       `To: ${headers["To"]}\r\n` +
       `From: ${headers["From"]}\r\n` +
@@ -187,7 +208,7 @@ function handleCancel(ws, headers) {
       `Content-Length: 0\r\n\r\n`;
 
     callee.ws.send(terminatedResponse);
-    console.log(`📴 Notified callee ${toUser} that the call was canceled`);
+    console.log(`📴 Notified callee ${fromUser} that the call was canceled`);
   }
 }
 
