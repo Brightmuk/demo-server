@@ -1,4 +1,5 @@
 const WebSocket = require('ws');
+const {sendCallNotification} = require("./pushNotification.js");
 
 const PORT = 5066;
 const wss = new WebSocket.Server({ port: PORT });
@@ -64,6 +65,23 @@ function handleRegister(ws, headers) {
     `Content-Length: 0\r\n\r\n`);
 
   console.log(`✅ User Registered: ${username} (${sipUri})\n`);
+  sendOptions(ws, sipUri, username);
+}
+
+// Function to send SIP OPTIONS request
+function sendOptions(ws, sipUri, username) {
+  const callId = `options-${Math.floor(Math.random() * 100000)}`;
+  const optionsMessage = `OPTIONS ${sipUri} SIP/2.0\r\n` +
+    `Via: SIP/2.0/WSS server.invalid;branch=z9hG4bK-${Math.random().toString(36).substr(2, 10)}\r\n` +
+    `To: <${sipUri}>\r\n` +
+    `From: <sip:server@invalid>;tag=${Math.random().toString(36).substr(2, 10)}\r\n` +
+    `Call-ID: ${callId}\r\n` +
+    `CSeq: 1 OPTIONS\r\n` +
+    `Max-Forwards: 70\r\n` +
+    `Content-Length: 0\r\n\r\n`;
+
+  ws.send(optionsMessage);
+  console.log(`📡 Sent OPTIONS to ${username} (${sipUri})`);
 }
 
 function handleInvite(ws, headers, sdpBody) {
@@ -77,6 +95,7 @@ function handleInvite(ws, headers, sdpBody) {
   }
 
   const calleeUsername = to.match(/sip:(\d+)@/)?.[1];
+  const callerUsername = from.match(/sip:(\d+)@/)?.[1];
   let callee = clients.get(calleeUsername);
 
   // Send 100 TRYING immediately
@@ -89,30 +108,39 @@ function handleInvite(ws, headers, sdpBody) {
     `Content-Length: 0\r\n\r\n`);
 
   console.log(`📞 Sent 100 TRYING...`);
+  //Send them a push notification
+  const userFcmToken = "wrpBT2PRvOQdkSRItop_g:APA91bF-fSq9LQIyPEczekKp0T1OiPOf4FmYit9Zvh5xMWY6cFbM27cvfQGzbA6pkBzXfWZn-JoCjthPJ8bX-EgtkZgsn4Y3bGBgYivrZW3S56vz4j5I5i4";
+  sendCallNotification(userFcmToken, callerUsername, calleeUsername);
 
   if (!callee) {
-    console.log(`🚫 Callee not available. Waiting for 10 seconds...`);
+    console.log(`🚫 Callee not available. Checking every 2 seconds for up to 20 seconds...`);
 
-    // Wait for 10 seconds to check again
-    setTimeout(() => {
-      callee = clients.get(calleeUsername); // Re-check availability
+    let retries = 0;
+    const maxRetries = 20 / 2; // Total retries (20s / 2s = ~10 checks)
 
-      if (!callee) {
-        console.log(`🚫 Callee still unavailable after 10 seconds. Sending 480.`);
-        return ws.send(`SIP/2.0 480 Temporarily Unavailable\r\n` +
-          `Retry-After: 30\r\n` +
-          `Via: ${headers["Via"]}\r\n` +
-          `To: ${headers["To"]}\r\n` +
-          `From: ${headers["From"]}\r\n` +
-          `Call-ID: ${callId}\r\n` +
-          `CSeq: ${headers["CSeq"]}\r\n` +
-          `Content-Length: 0\r\n\r\n`);
-      }
+    const checkCalleeAvailability = setInterval(() => {
+        callee = clients.get(calleeUsername); // Re-check availability
+        retries++;
 
-      console.log(`📞 Callee became available. Proceeding with call.`);
-      forwardInvite(ws, headers, sdpBody, calleeUsername);
-    }, 20000); // 20 seconds timeout
-  } else {
+        if (callee) {
+            console.log(`📞 Callee became available after ${retries * 2} seconds. Proceeding with call.`);
+            clearInterval(checkCalleeAvailability);
+            forwardInvite(ws, headers, sdpBody, calleeUsername);
+        } else if (retries >= maxRetries) {
+            console.log(`🚫 Callee still unavailable after 20 seconds. Sending 480.`);
+            clearInterval(checkCalleeAvailability);
+            ws.send(`SIP/2.0 480 Temporarily Unavailable\r\n` +
+                `Retry-After: 30\r\n` +
+                `Via: ${headers["Via"]}\r\n` +
+                `To: ${headers["To"]}\r\n` +
+                `From: ${headers["From"]}\r\n` +
+                `Call-ID: ${callId}\r\n` +
+                `CSeq: ${headers["CSeq"]}\r\n` +
+                `Content-Length: 0\r\n\r\n`);
+        }
+    }, 2000); // Check every 2 seconds
+}
+ else {
     console.log(`📞 Callee is available. Forwarding the call immediately.`);
     forwardInvite(ws, headers, sdpBody, calleeUsername); 
   }
