@@ -410,22 +410,25 @@ app.get('/items', async (req, res) => {
     }
 });
 
+app.get("/auth/google/login", (req, res) => {
+  res.status(200).send(`
+  <h2>Submit Your Details</h2>
+  <form action="/submit" method="POST">
+    <label>Name:</label>
+    <input type="text" name="name" required><br><br>
+    
+    <label>Email:</label>
+    <input type="email" name="email" required><br><br>
 
+    <button type="submit">Submit</button>
+  </form>
+`);
+});
 
-// Serve HTML form
-app.get("/form", (req, res) => {
-    res.status(200).send(`
-    <h2>Submit Your Details</h2>
-    <form action="/submit" method="POST">
-      <label>Name:</label>
-      <input type="text" name="name" required><br><br>
-      
-      <label>Email:</label>
-      <input type="email" name="email" required><br><br>
-
-      <button type="submit">Submit</button>
-    </form>
-  `);
+app.get("/login", (req, res) => {
+  setTimeout(() => {
+    res.redirect('/auth/google/login');
+  }, 2000);
 });
 
 // Handle form submission
@@ -433,31 +436,32 @@ app.post("/submit", (req, res) => {
     const { name, email } = req.body;
     console.log(req.body);
     // Simple response (store in memory or database if needed)
-    res.status(200).json({
-        "response": {
-            "data_source": {
-                "cols": [
-                    {
-                        "label": "status",
-                        "type": "string",
-                        "value": "status"
-                    }
+    res.redirect(`myapp://auth?token=${appToken}`);
+    // res.status(200).json({
+    //     "response": {
+    //         "data_source": {
+    //             "cols": [
+    //                 {
+    //                     "label": "status",
+    //                     "type": "string",
+    //                     "value": "status"
+    //                 }
 
-                ],
-                "rows": [
-                    [
-                        "PAID"
-                    ]
-                ],
-                "lines": [],
-                "groups": [],
-                "data": [],
-                "min_id": 0,
-                "max_id": 0,
-                "row_count": 4
-            }
-        }
-    })
+    //             ],
+    //             "rows": [
+    //                 [
+    //                     "PAID"
+    //                 ]
+    //             ],
+    //             "lines": [],
+    //             "groups": [],
+    //             "data": [],
+    //             "min_id": 0,
+    //             "max_id": 0,
+    //             "row_count": 4
+    //         }
+    //     }
+    // })
 });
 
 
