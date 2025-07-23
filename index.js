@@ -178,7 +178,7 @@ app.get('/user', (req, res) => {
     })
 })
 
-app.post('/appetizers', (req, res) => {
+app.get('/appetizers', (req, res) => {
     res.status(200).json({
         "request": appetizers
     })
