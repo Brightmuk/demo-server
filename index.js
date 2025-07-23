@@ -10,320 +10,158 @@ app.use(express.json());
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var expenses = [
-    {
-        "name": "Perfueme de eu",
-        "extras": {
-            "price": 16500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Cabinet Closee",
-        "extras": {
-            "price": 7000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Base guitar",
-        "extras": {
-            "price": 18000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Wide Desk",
-        "extras": {
-            "price": 14000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Armchair",
-        "extras": {
-            "price": 12500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Bed Table",
-        "extras": {
-            "price": 17500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "TV Stand",
-        "extras": {
-            "price": 14000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Bench",
-        "extras": {
-            "price": 5000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Nightstand",
-        "extras": {
-            "price": 9500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Side Table",
-        "extras": {
-            "price": 15500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Stool",
-        "extras": {
-            "price": 6500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Cabinet",
-        "extras": {
-            "price": 15500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Bench",
-        "extras": {
-            "price": 13500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Wardrobe",
-        "extras": {
-            "price": 6500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Recliner",
-        "extras": {
-            "price": 5500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Sofa",
-        "extras": {
-            "price": 9000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Dining Table",
-        "extras": {
-            "price": 14500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Dining Table",
-        "extras": {
-            "price": 17000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Bookcase",
-        "extras": {
-            "price": 17000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Desk",
-        "extras": {
-            "price": 7500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Desk",
-        "extras": {
-            "price": 11500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Ottoman",
-        "extras": {
-            "price": 16000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Table",
-        "extras": {
-            "price": 12500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Dining Table",
-        "extras": {
-            "price": 9000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Ottoman",
-        "extras": {
-            "price": 9000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Cabinet",
-        "extras": {
-            "price": 18000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Chair",
-        "extras": {
-            "price": 10500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Desk",
-        "extras": {
-            "price": 10500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Desk",
-        "extras": {
-            "price": 12000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Couch",
-        "extras": {
-            "price": 9000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Cabinet",
-        "extras": {
-            "price": 15500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Couch",
-        "extras": {
-            "price": 13000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Bench",
-        "extras": {
-            "price": 5000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Chair",
-        "extras": {
-            "price": 5500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Bench",
-        "extras": {
-            "price": 18000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Nightstand",
-        "extras": {
-            "price": 9000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Side Table",
-        "extras": {
-            "price": 7000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Nightstand",
-        "extras": {
-            "price": 12000,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    },
-    {
-        "name": "Wardrobe",
-        "extras": {
-            "price": 19500,
-            "quantity": "1 set",
-            "image": "https://i.ibb.co/K6xv7bw/Bed.webp"
-        }
-    }];
-
+var appetizers = [
+  {
+    "id": "0001",
+    "name": "Bruschetta",
+    "description": "Toasted bread topped with diced tomatoes, garlic, and basil",
+    "price": 7.99,
+    "imageURL": "https://images.unsplash.com/photo-1603133872879-6fb0f52f4f9f",
+    "protein": 3,
+    "carbs": 20,
+    "calories": 120
+  },
+  {
+    "id": "0002",
+    "name": "Mozzarella Sticks",
+    "description": "Fried mozzarella cheese served with marinara sauce",
+    "price": 8.50,
+    "imageURL": "https://images.unsplash.com/photo-1617191519704-8e3e73d9e351",
+    "protein": 10,
+    "carbs": 15,
+    "calories": 290
+  },
+  {
+    "id": "0003",
+    "name": "Stuffed Mushrooms",
+    "description": "Baked mushrooms filled with cheese and herbs",
+    "price": 9.00,
+    "imageURL": "https://images.unsplash.com/photo-1613145990877-cd9b60f777ed",
+    "protein": 5,
+    "carbs": 8,
+    "calories": 110
+  },
+  {
+    "id": "0004",
+    "name": "Spring Rolls",
+    "description": "Crispy rolls with mixed vegetables and sweet chili sauce",
+    "price": 6.75,
+    "imageURL": "https://images.unsplash.com/photo-1604908177225-054f6d3de7c3",
+    "protein": 4,
+    "carbs": 18,
+    "calories": 150
+  },
+  {
+    "id": "0005",
+    "name": "Chicken Wings",
+    "description": "Spicy buffalo chicken wings served with blue cheese dip",
+    "price": 10.99,
+    "imageURL": "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
+    "protein": 20,
+    "carbs": 5,
+    "calories": 250
+  },
+  {
+    "id": "0006",
+    "name": "Calamari",
+    "description": "Fried squid rings served with garlic aioli",
+    "price": 11.50,
+    "imageURL": "https://images.unsplash.com/photo-1562967916-eb82221dfb36",
+    "protein": 13,
+    "carbs": 10,
+    "calories": 210
+  },
+  {
+    "id": "0007",
+    "name": "Deviled Eggs",
+    "description": "Classic deviled eggs with mustard and paprika",
+    "price": 5.99,
+    "imageURL": "https://images.unsplash.com/photo-1562967914-93577d3e52e0",
+    "protein": 6,
+    "carbs": 2,
+    "calories": 100
+  },
+  {
+    "id": "0008",
+    "name": "Caprese Skewers",
+    "description": "Tomato, mozzarella, and basil skewers with balsamic glaze",
+    "price": 6.50,
+    "imageURL": "https://images.unsplash.com/photo-1608222351219-0f2b77bdc7fa",
+    "protein": 7,
+    "carbs": 6,
+    "calories": 130
+  },
+  {
+    "id": "0009",
+    "name": "Nachos",
+    "description": "Tortilla chips with melted cheese, jalapeños, and salsa",
+    "price": 8.99,
+    "imageURL": "https://images.unsplash.com/photo-1585238342023-78b9f0e37732",
+    "protein": 9,
+    "carbs": 25,
+    "calories": 310
+  },
+  {
+    "id": "0010",
+    "name": "Garlic Bread",
+    "description": "Toasted bread with garlic butter and herbs",
+    "price": 4.99,
+    "imageURL": "https://images.unsplash.com/photo-1601312370509-6c48aab8c985",
+    "protein": 4,
+    "carbs": 22,
+    "calories": 190
+  },
+  {
+    "id": "0011",
+    "name": "Onion Rings",
+    "description": "Crispy fried onion rings served with ranch dip",
+    "price": 6.99,
+    "imageURL": "https://images.unsplash.com/photo-1626435528790-98b8cb99a32d",
+    "protein": 3,
+    "carbs": 27,
+    "calories": 270
+  },
+  {
+    "id": "0012",
+    "name": "Shrimp Cocktail",
+    "description": "Chilled shrimp served with cocktail sauce",
+    "price": 12.99,
+    "imageURL": "https://images.unsplash.com/photo-1624469715581-61a1db62b9eb",
+    "protein": 14,
+    "carbs": 2,
+    "calories": 120
+  },
+  {
+    "id": "0013",
+    "name": "Potato Skins",
+    "description": "Crispy potato skins topped with cheese and bacon",
+    "price": 9.25,
+    "imageURL": "https://images.unsplash.com/photo-1600793009187-cc9aa5620810",
+    "protein": 11,
+    "carbs": 20,
+    "calories": 280
+  },
+  {
+    "id": "0014",
+    "name": "Spinach Artichoke Dip",
+    "description": "Warm creamy spinach and artichoke dip served with chips",
+    "price": 8.75,
+    "imageURL": "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f",
+    "protein": 6,
+    "carbs": 12,
+    "calories": 210
+  },
+  {
+    "id": "0015",
+    "name": "Mini Sliders",
+    "description": "Beef sliders with cheese and pickles on mini buns",
+    "price": 10.50,
+    "imageURL": "https://images.unsplash.com/photo-1625941421876-1f1a983727de",
+    "protein": 18,
+    "carbs": 18,
+    "calories": 340
+  }
+];
 
 
 app.get('/user', (req, res) => {
@@ -340,11 +178,9 @@ app.get('/user', (req, res) => {
     })
 })
 
-app.post('/expenses', (req, res) => {
+app.post('/appetizers', (req, res) => {
     res.status(200).json({
-        "response_status": "00",
-
-        "response": expenses
+        "request": appetizers
     })
 })
 app.post('/upload-expenses', (req, res) => {
@@ -398,12 +234,12 @@ app.get('/items', async (req, res) => {
     console.log(`The current page is ${page} and limit is ${limit}`)
 
     try {
-        var paginationResult = expenses.slice(lastItem - limit, lastItem)
+        var paginationResult = appetizers.slice(lastItem - limit, lastItem)
         res.json({
             data: paginationResult,
-            total: expenses.length,
+            total: appetizers.length,
             page: page,
-            totalPages: Math.ceil(expenses.length / limit),
+            totalPages: Math.ceil(appetizers.length / limit),
         });
     } catch (error) {
         res.status(500).json({ error: 'Something went wrong' });
