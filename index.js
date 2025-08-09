@@ -10,7 +10,7 @@ app.use(express.json());
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var callsInQueue = [
+var appetizers = [
   {
     "id": "0001",
     "name": "Bruschetta",
@@ -170,44 +170,12 @@ var callsInQueue = [
 
 
 
-app.get('/calls', (req, res) => {
+app.get('/appetizers', (req, res) => {
     res.status(200).json({
-        "calls": callsInQueue
+        "appetizers": appetizers
     })
 })
 
-app.post('/claim', (req, res) => {
-    console.log("Received: " + req.body)
-    res.status(200).json({
-        "response_status": "00",
-        "response": "Your Expenses were recorded"
-    })
-})
-
-var quantityMock = {}
-app.post('/update_quantity', (req, res) => {
-    var itemId = req.body['cart_item_id'];
-    var newQuantity = req.body['quantity'];
-
-    quantityMock[itemId] = newQuantity;
-    console.log("Current map: ", quantityMock);
-    res.status(200).json({
-        "response_status": "00",
-        "response": { "quantity": quantityMock[itemId], "cartItemsCount": 3 }
-    })
-})
-
-app.get('/options', (req, res) => {
-    var query = req.query.query;
-    console.log(query);
-    res.status(200).json({
-        "response_status": "00",
-        "options": [
-            { "label": "Vegetables", "value": "Vegetables", "options": [] },
-            { "label": "Fruits", "value": "Fruits", "options": [] },
-        ],
-    })
-})
 
 
 //PAGINATION 
