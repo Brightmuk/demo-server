@@ -61,4 +61,4 @@ let mockCalls = [
   ],
 ];
 
-export default mockCalls
+module.exports = mockCalls;

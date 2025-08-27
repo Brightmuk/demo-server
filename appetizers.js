@@ -149,5 +149,6 @@ var appetizers = [
     "carbs": 18,
     "calories": 340
   }
-]
-export default appetizers;
+];
+
+module.exports = appetizers;

@@ -220,7 +220,7 @@
                     "DATA SOURCE",
                     null,
                     null,
-                    "{\"websocketUrl\": \"wss://5d2ce94af53f.ngrok-free.app/call\"}"
+                    "{\"websocketUrl\": \"wss://demo-server-uzwr.onrender.com/calls\"}"
                   ]
                 }
               }

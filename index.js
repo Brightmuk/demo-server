@@ -217,9 +217,8 @@ server.on("upgrade", (req, socket, head) => {
 
 // ================== START SERVER ==================
 server.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
-  console.log(`   Calls WS -> ws://localhost:${PORT}/calls`);
-  console.log(`   Messages WS -> ws://localhost:${PORT}/messages`);
+  console.log(`✅ Http Server running on http://{baseurl}:${PORT}`);
+  console.log(`   WS -> ws://{baseurl}:${PORT}/`);
   
 });
 
