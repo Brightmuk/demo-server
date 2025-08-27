@@ -81,7 +81,7 @@ const server = http.createServer((req, res) => {
             res.writeHead(400, { "Content-Type": "application/json" });
             return res.end(JSON.stringify({ error: "Invalid JSON body" }));
           }
-
+          console.log(dataName)
           switch (dataName) {
             case "txns data viz":
             case "call_history":
@@ -171,7 +171,7 @@ callsWSS.on("connection", (ws) => {
 
     console.log(`🔄 Updated call row at index ${randomIndex}`);
     broadcastCalls(buildCallResponse(mockCalls));
-  }, 10000);
+  }, 30000);
 
   ws.on("close", () => clearInterval(interval));
 });
