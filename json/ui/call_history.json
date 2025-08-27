@@ -1,0 +1,118 @@
+{
+    "response": {
+        "get_interface": {
+            "this_page_inputs": {
+                "1": {
+                    "2": {
+                        "page_var": [
+                            "Call History",
+                            "list"
+                        ],
+                        "Call History": {
+                            "2": {
+                                "Call History": {
+                                    "input_var": [
+                                        "Call History",
+                                        "FORM",
+                                        "1",
+                                        "1000",
+                                        "call_history",
+                                        null,
+                                        null,
+                                        "24|24|24",
+                                        null,
+                                        false,
+                                        "",
+                                        "CALL HISTORY",
+                                        900,
+                                        null,
+                                        "{}"
+                                    ],
+                                    "5": [
+                                        "Call history view",
+                                        "CALL HISTORY",
+                                        "1",
+                                        "1000",
+                                        "call_history",
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        false,
+                                        "",
+                                        "DATA SOURCE",
+                                        null,
+                                        null,
+                                        "{}"
+                                    ]
+                                    
+                                }
+                            }
+                        }
+                    },
+                    "section_var": [
+                        "Call History",
+                        null
+                    ]
+                }
+            }
+        },
+        "get_section": {
+            "this_page_inputs": {
+                "1": {
+                    "2": {
+                        "page_var": [
+                            "Vendor Buy Float",
+                            "list"
+                        ],
+                        "Vendor Buy Float": {
+                            "2": {
+                                "Buy Float": {
+                                    "input_var": [
+                                        "Call History",
+                                        "FORM",
+                                        "1",
+                                        "1000",
+                                        "VENDOR BUY FLOAT",
+                                        null,
+                                        null,
+                                        "24|24|24",
+                                        null,
+                                        false,
+                                        "",
+                                        "VENDOR BUY FLOAT",
+                                        900,
+                                        null,
+                                        "{}"
+                                    ],
+                                    "5": [
+                                        "Call history view",
+                                        "CALL HISTORY",
+                                        "1",
+                                        "1000",
+                                        "call_history",
+                                        null,
+                                        null,
+                                        null,
+                                        null,
+                                        false,
+                                        "",
+                                        "DATA SOURCE",
+                                        null,
+                                        null,
+                                        "{}"
+                                    ]
+                                    
+                                }
+                            }
+                        }
+                    },
+                    "section_var": [
+                        "Vendor Airtime",
+                        null
+                    ]
+                }
+            }
+        }
+    }
+}

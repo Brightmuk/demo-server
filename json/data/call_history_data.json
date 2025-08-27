@@ -1,0 +1,118 @@
+{
+  "response": {
+    "subdomain_details": "Subdomain Details Updated",
+    "get_profile": "Session Profile Captured",
+    "data_source": {
+      "cols": [
+        {
+          "label": "id",
+          "type": "string",
+          "value": "id"
+        },
+        {
+          "label": "caller_id_name",
+          "type": "string",
+          "value": "caller_id_name"
+        },
+        {
+          "label": "caller_id_number",
+          "type": "string",
+          "value": "caller_id_number"
+        },
+        {
+          "label": "call_status",
+          "type": "string",
+          "value": "call_status"
+        },
+        {
+          "label": "start_time",
+          "type": "string",
+          "value": "start_time"
+        },
+        {
+          "label": "direction",
+          "type": "string",
+          "value": "direction"
+        },
+        {
+          "label": "duration",
+          "type": "string",
+          "value": "duration"
+        },
+        {
+          "label": "followUp",
+          "type": "string",
+          "value": "followUp"
+        },
+        {
+          "label": "channel",
+          "type": "string",
+          "value": "channel",
+          "list_filters": [
+            "voice",
+            "chat",
+            "Whatsapp",
+            "Mail",
+            "SMS"
+          ]
+        }
+      ],
+      "rows": [
+        [
+          "1",
+          "John Doe",
+          "+12025551234",
+          "Missed",
+          "2025-08-19T09:30:00Z",
+          "Inbound",
+          150,
+          "Follow-Up Added",
+          "voice"
+        ],
+        [
+          "2",
+          "Jane Smith",
+          "+12025551234",
+          "Completed",
+          "2025-07-19T14:30:00Z",
+          "Outbound",
+          480,
+          "Follow-Up Added",
+          "voice"
+        ], 
+        [
+          "3",
+          "Alice Brown",
+          "+12025551234",
+          "Rejected",
+          "2025-08-19T15:30:00Z",
+          "Outbound",
+          150,
+          "Follow-Up Added",
+          "voice"
+        ],
+        [
+          "4",
+          "Charlie Green",
+          "+12025551234",
+          "Completed",
+          "2025-08-19T15:30:00Z",
+          "Inbound",
+          650,
+          "",
+          "SMS"
+        ]
+      ],
+      "lines": [],
+      "groups": [],
+      "data": [],
+      "min_id": 0,
+      "max_id": 0,
+      "row_count": 4
+    }
+  },
+  "action_id": 53,
+  "response_status": "00",
+  "overall_status": "00",
+  "last_response": ""
+}

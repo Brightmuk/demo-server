@@ -1,15 +1,124 @@
-// websocket-server.js
 const http = require("http");
 const WebSocket = require("ws");
-
+const fs = require("fs");
+const path = require("path");
 const PORT = 8080;
-const server = http.createServer();
+
+
+// ================== HTTP SERVER ==================
+
+
+// Mock function + data you already have
+function buildCallResponse(rows) {
+  return { calls: rows }; // replace with your real logic
+}
+const mockRows = [{ id: 1, caller: "Alice", time: Date.now() }];
+
+// Utility: load JSON file safely
+function loadJsonFromFile(filePath, res) {
+  const fullPath = path.join(__dirname, filePath);
+  fs.readFile(fullPath, "utf8", (err, data) => {
+    if (err) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ error: `File not found: ${filePath}` }));
+    }
+    try {
+      const jsonData = JSON.parse(data);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(jsonData));
+    } catch (parseErr) {
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: "Invalid JSON format" }));
+    }
+  });
+}
+
+const server = http.createServer((req, res) => {
+  
+  let parts = req.url.split("/");
+  let endpoint = parts[parts.length - 1];
+
+  endpoint = decodeURIComponent(endpoint).toUpperCase();
+
+  console.log("Resolved endpoint:", endpoint);
+
+  console.log(endpoint)
+    switch (endpoint) {
+      case "HOME":
+      case "LANDING PAGE":
+        return loadJsonFromFile("json/ui/home.json", res);
+      case "CALL HISTORY":
+        return loadJsonFromFile("json/ui/call_history.json", res);
+      case "CHAT":
+        return loadJsonFromFile("json/ui/chat.json", res);
+      case "ACTIVE PLAN":
+        return loadJsonFromFile("json/ui/active_plan.json", res);
+      case "BILLING HISTORY":
+        return loadJsonFromFile("json/ui/billing_history.json", res);
+      case "USAGE OVERVIEW":
+        return loadJsonFromFile("json/ui/usage_overview.json", res);
+      case "SUBSCRIPTION PLANS":
+        return loadJsonFromFile("json/ui/subscription_plans.json", res);
+      case "LANDING PAGE":
+        return loadJsonFromFile("json/ui/landing.json", res);
+
+      case "DATA SOURCE": {
+        // Collect request body for POST
+        let body = "";
+        req.on("data", (chunk) => {
+          body += chunk.toString();
+        });
+        req.on("end", () => {
+          let dataName;
+          try {
+            dataName = JSON.parse(body).data_name;
+          } catch (err) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify({ error: "Invalid JSON body" }));
+          }
+
+          switch (dataName) {
+            case "txns data viz":
+            case "call_history":
+              return loadJsonFromFile("json/data/call_history_data.json", res);
+            case "call_queue":
+              return loadJsonFromFile("json/data/call_queue_data.json", res);
+            case "suggestions":
+              return loadJsonFromFile("json/data/suggestions_data.json", res);
+            case "incoming_call_queue":
+              return loadJsonFromFile("json/data/call_queue_data.json", res);
+            case "chat":
+              return loadJsonFromFile("json/data/chat_data.json", res);
+            case "subscription_plans":
+              return loadJsonFromFile("json/data/subscription_plans_data.json", res);
+            case "active_plan":
+              return loadJsonFromFile("json/data/active_plan_data.json", res);
+            case "billing_history":
+              return loadJsonFromFile("json/data/billing_history_data.json", res);
+            case "usage_overview":
+              return loadJsonFromFile("json/data/usage_overview_data.json", res);
+            default:
+              return loadJsonFromFile("json/data/txns_data.json", res);
+          }
+        });
+        break;
+      }
+
+      default:
+        res.writeHead(404, { "Content-Type": "text/plain" });
+        res.end("Not Found");
+    }
+  
+});
+
+
+
 
 // ================== CALLS SOCKET ==================
 const callsWSS = new WebSocket.Server({ noServer: true });
 
 // Initial mock rows for calls
-let mockRows = [
+let mockCalls = [
   [
     "0786dea6-0856-4f5d-92af-7dcc80800fab",
     "waiting",
@@ -109,16 +218,16 @@ function broadcastCalls(obj) {
 callsWSS.on("connection", (ws) => {
   console.log("🔗 Client connected to /calls");
 
-  ws.send(JSON.stringify(buildCallResponse(mockRows)));
+  ws.send(JSON.stringify(buildCallResponse(mockCalls)));
 
   const interval = setInterval(() => {
-    const randomIndex = Math.floor(Math.random() * mockRows.length);
-    mockRows[randomIndex][1] = Math.random() > 0.5 ? "waiting" : "Returning";
-    mockRows[randomIndex][5] = new Date().toISOString();
-    mockRows[randomIndex][6] = (Math.random() * 10).toFixed(1);
+    const randomIndex = Math.floor(Math.random() * mockCalls.length);
+    mockCalls[randomIndex][1] = Math.random() > 0.5 ? "waiting" : "Returning";
+    mockCalls[randomIndex][5] = new Date().toISOString();
+    mockCalls[randomIndex][6] = (Math.random() * 10).toFixed(1);
 
     console.log(`🔄 Updated call row at index ${randomIndex}`);
-    broadcastCalls(buildCallResponse(mockRows));
+    broadcastCalls(buildCallResponse(mockCalls));
   }, 10000);
 
   ws.on("close", () => clearInterval(interval));
@@ -165,7 +274,9 @@ server.on("upgrade", (req, socket, head) => {
 
 // ================== START SERVER ==================
 server.listen(PORT, () => {
-  console.log(`✅ WebSocket server running on ws://localhost:${PORT}`);
-  console.log(`   Calls socket -> ws://localhost:${PORT}/calls`);
-  console.log(`   Messages socket -> ws://localhost:${PORT}/messages`);
+  console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`   Calls WS -> ws://localhost:${PORT}/calls`);
+  console.log(`   Messages WS -> ws://localhost:${PORT}/messages`);
+  
 });
+

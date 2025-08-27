@@ -1,0 +1,61 @@
+{
+    "response": {
+        "subdomain_details": "Subdomain not in request.",
+        "get_profile": "Session Profile Captured",
+        "data_source": {
+            "cols": [
+                {
+                    "label": "id",
+                    "type": "string",
+                    "value": "source_id"
+                },
+                {
+                    "label": "email",
+                    "type": "string",
+                    "value": "email"
+                },
+                {
+                    "label": "extension",
+                    "type": "string",
+                    "value": "extension",
+                    "search_filters": true
+                },
+                {
+                    "label": "name",
+                    "type": "string",
+                    "value": "name"
+                }
+            ],
+            "rows": [
+                [
+                    "12afd6a0-4685-4d5b-99ef-9591aab365cf",
+                    "innoccent.mwita@interintel.co.ke",
+                    "1001",
+                    "Innoccent Mwita"
+                ],
+                [
+                    "12afd6a0-4685-4d5b-99ef-9591aab365cf",
+                    "denis.gichana@interintel.co.ke",
+                    "1007",
+                    "Denis Gichana"
+                ],
+                [
+                    "12afd6a0-4685-4d5b-99ef-9591aab365cf",
+                    "elizabeth.kuria@interintel.co.ke",
+                    "1008",
+                    "Elizabeth Kuria"
+                ]
+            ],
+            "lines": [],
+            "groups": [],
+            "data": [],
+            "min_id": 0,
+            "max_id": 0,
+            "row_count": 13
+        }
+    },
+    "action_id": 53,
+    "response_status": "00",
+    "overall_status": "00",
+    "last_response": ""
+}

@@ -1,0 +1,332 @@
+{
+  "response": {
+    "get_gateway_details": {
+      "google_tag_code": "GTM-NHHC7CH",
+      "google_analytics_code": "UA-145149638-1",
+      "profile": {
+        "profile_photo": "",
+        "first_name": "",
+        "last_name": "",
+        "access_level": "ADMINISTRATOR",
+        "role": "Adminstrator",
+        "notification_channel": "5/notifications/4613230"
+      },
+      "institution_id": 737,
+      "logo": "",
+      "icon_image": "",
+      "name": "Eldoret Merchants Limited",
+      "tagline": "Eldoret Merchants Limited",
+      "background_image": "radial-gradient(ellipse farthest-corner at 50% 100%,#043D5C10%,#E93E3A 60%,#043D5C 90%)",
+      "host": "www.nikobizz.com",
+      "default_color": "#27330e",
+      "primary_color": "#2B547E",
+      "secondary_color": "#00008B",
+      "accent_color": "rgba(11,40,64,0.9)",
+      "font_family": null,
+      "theme": "dsv3.0",
+      "design": "dsv3.0"
+    },
+    "get_interface": {
+
+      "this_page_inputs": {
+        
+        "9": {
+          "section_var": [
+            "Services", 
+            "icons:view-carousel"
+          ],
+          
+          
+          "1": { 
+            "page_var": [
+              "Nikobizz Services",
+              "list"
+            ],
+            "Nikobizz Services": {
+              "3": {
+                "Nikobizz Recent Transactions": {
+                  "input_var": [ 
+                    "Nikobizz Recent Transactions",
+                    "FORM",
+                    "0",
+                    "100",
+                    "form",
+                    null,
+                    null,
+                    "24|24|24",
+                    null,
+                    false,
+                    "",
+                    null,
+                    900,
+                    null,
+                    "{}"
+                  ],
+                  "3": [ 
+                    "Recent transactions",
+                    "DATALIST ELEMENT",
+                    "1",
+                    "1000",
+                    "nikobizz_recent_transactions",
+                    "nikobizz_recent_transactions",
+                    null,
+                    null,
+                    null,
+                    true,
+                    "",
+                    "DATA SOURCE",
+                    null,
+                    null,
+                    "{}"
+                  ]
+                }
+              },
+              "2": {
+                "Nikobizz Services": {
+                  "input_var": [
+                    "Nikobizz Services",
+                    "FORM",
+                    "0",
+                    "100",
+                    "form",
+                    null,
+                    null,
+                    "24|24|24",
+                    null,
+                    false,
+                    "",
+                    null,
+                    900,
+                    null,
+                    "{}"
+                  ],
+                  "2": [
+                    "Services",
+                    "HORIZONTAL LIST",
+                    "0",
+                    "100",
+                    "service_applications",
+                    "app_service_applications",
+                    null,
+                    null,
+                    null,
+                    false,
+                    "",
+                    "DATA SOURCE",
+                    null,
+                    null,
+                    "{}"
+                  ]
+                }
+              },
+              "1": {
+                "Nikobizz Carousel": {
+                  "input_var": [
+                    "Nikobizz Carousel",
+                    "FORM",
+                    "0",
+                    "100",
+                    "form",
+                    null,
+                    null,
+                    "24|24|24",
+                    null,
+                    false,
+                    "",
+                    null,
+                    900,
+                    null,
+                    "{}"
+                  ],
+                  "1": [
+                    "Carousel",
+                    "CAROUSEL",
+                    "1",
+                    "1000",
+                    "adds_carousel",
+                    "mipay_aitime_ads",
+                    null,
+                    null,
+                    null,
+                    false,
+                    "",
+                    "DATA SOURCE",
+                    null,
+                    null,
+                    "{}"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "all_pages": {
+        "9": {
+          "Services": {
+            "1": [
+              "Nikobizz Services",
+              "list"
+            ]
+          }
+        }
+      }
+    },
+    "get_section": {
+      "this_page_inputs": {
+          
+        "10": {
+          "section_var": [
+            "Billing",
+            "icons:wallet"
+          ],
+          "1": {
+            "page_var": [
+              "Live queue",
+              "icons:queue"
+            ],
+            "Live queue": {
+              "1": {
+                "Nenasasa Carousel": {
+                   "input_var": [
+                    "Live queue",
+                    "FORM",
+                    "0",
+                    "100",
+                    "form",
+                    null,
+                    null,
+                    "24|24|24",
+                    null,
+                    false,
+                    "",
+                    null,
+                    900,
+                    null,
+                    "{}"
+                  ],
+                  "3": [
+                    "Live queue",
+                    "CALL QUEUE",
+                    "1",
+                    "1000",
+                    "call_queue",
+                    "call_queue",
+                    null,
+                    null,
+                    null,
+                    true,
+                    "",
+                    "DATA SOURCE",
+                    null,
+                    null,
+                    "{\"websocketUrl\": \"wss://5d2ce94af53f.ngrok-free.app/call\"}"
+                  ]
+                }
+              }
+              
+            }
+          },
+          
+          "2": {
+            "page_var": [
+              "Recents",
+              "icons:recents"
+            ],
+            "Recents": {
+              "1": {
+                "Other Billing Carousel": {
+                   "input_var": [
+                    "Plans",
+                    "FORM",
+                    "0",
+                    "100",
+                    "form",
+                    null,
+                    null,
+                    "24|24|24",
+                    null,
+                    false,
+                    "",
+                    "CHOOSE_PLAN",
+                    900,
+                    null,
+                    "{}"
+                  ],
+                    "2": [
+                        "Call history view",
+                        "CALL HISTORY",
+                        "1",
+                        "1000",
+                        "call_history",
+                        null,
+                        null,
+                        null,
+                        null,
+                        false,
+                        "",
+                        "DATA SOURCE",
+                        null,
+                        null,
+                        "{}"
+                    ]
+                }
+              }
+            }
+          },
+          "3": {
+            "page_var": [
+              "Dialpad",
+              "icons:dialpad"
+            ],
+            "Dialpad": {
+              "1": {
+                "Other Billing Carousel": {
+                "input_var": [
+                        "Dialpad",
+                        "FORM",
+                        "1",
+                        "1000",
+                        "TOPUP",
+                        null,
+                        null,
+                        "24|24|24",
+                        null,
+                        false,
+                        "",
+                        "TOPUP",
+                        900,
+                        null,
+                        "{}"
+                    ],
+                    "5": [
+                        "Dialpad",
+                        "DIALPAD",
+                        "1",
+                        "1000",
+                        "suggestions",
+                        null,
+                        null,
+                        null,
+                        null,
+                        false,
+                        "",
+                        "DATA SOURCE",
+                        null,
+                        null,
+                        "{}"
+                    ]
+                    
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "action_id": 1976,
+  "response_status": "00",
+  "overall_status": "00",
+  "last_response": ""
+}

@@ -1,0 +1,126 @@
+{
+    "response": {
+        "subdomain_details": "Subdomain not in request.",
+        "get_profile": "Session Profile Captured",
+        "data_source": {
+            "cols": [
+                {
+                    "label": "messaging_product",
+                    "type": "string",
+                    "value": "messaging_product"
+                },
+                {
+                    "label": "type",
+                    "type": "string",
+                    "value": "type"
+                },
+                {
+                    "label": "message_id",
+                    "type": "string",
+                    "value": "message_id"
+                },
+                {
+                    "label": "timestamp",
+                    "type": "date",
+                    "value": "timestamp"
+                },
+                {
+                    "label": "sender_id",
+                    "type": "string",
+                    "value": "sender_id"
+                },
+                {
+                    "label": "content",
+                    "type": "string",
+                    "value": "content"
+                },
+                {
+                    "label": "sender_type",
+                    "type": "string",
+                    "value": "sender_type"
+                },
+                {
+                    "label": "message_type",
+                    "type": "string",
+                    "value": "message_type"
+                },
+                {
+                    "label": "recipient_type",
+                    "type": "string",
+                    "value": "recipient_type"
+                },
+                {
+                    "label": "status",
+                    "type": "string",
+                    "value": "status"
+                },
+                {
+                    "label": "MSISDN",
+                    "type": "string",
+                    "value": "MSISDN"
+                },
+                {
+                    "label": "accessPoint",
+                    "type": "string",
+                    "value": "accessPoint"
+                },
+                {
+                    "label": "sessionState",
+                    "type": "string",
+                    "value": "sessionState"
+                },
+                {
+                    "label": "phone",
+                    "type": "string",
+                    "value": "phone"
+                },
+                {
+                    "label": "name",
+                    "type": "string",
+                    "value": "name"
+                },
+                {
+                    "label": "session_id",
+                    "type": "string",
+                    "value": "session_id"
+                },
+                {
+                    "label": "site_id",
+                    "type": "string",
+                    "value": "site_id"
+                }
+            ],
+            "rows": [
+                [
+                    "nenachat",
+                    "chat_message",
+                    "2025-08-19T15:30:00Z",
+                    "Aug 25 2025",
+                    "982982",
+                    "Hello",
+                    "visitor",
+                    "text",
+                    "individual",
+                    "sent",
+                    "0707583092",
+                    "N/A",
+                    "CONT",
+                    "0707583092",
+                    "Robinson Ngecu",
+                    "040eaa84-9561-4592-b54c-e9d9ddc38b46",
+                    []
+                ]
+            ],
+            "lines": [],
+            "groups": [],
+            "data": [],
+            "min_id": 0,
+            "max_id": 0,
+            "row_count": 70
+        }
+    },
+    "action_id": 53,
+    "response_status": "00",
+    "overall_status": "00",
+    "last_response": ""
+}

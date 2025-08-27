@@ -1,0 +1,189 @@
+{
+  "response": {
+    "type": "full_update",
+    "subdomain_details": "Subdomain Details Updated",
+    "get_profile": "Session Profile Captured",
+    "data_source": {
+      "cols": [
+        {
+          "label": "id",
+          "type": "string",
+          "value": "source_id"
+        },
+        {
+          "label": "status",
+          "type": "string",
+          "value": "status"
+        },
+        {
+          "label": "channel",
+          "type": "string",
+          "value": "channel",
+          "list_filters":[
+                  "voice",
+                  "chat",
+                  "Whatsapp",
+                  "Mail",
+                  "SMS"
+          ]
+        },
+        {
+          "label": "phone",
+          "type": "string",
+          "value": "profile",
+          "search_filters":true
+        },
+        {
+          "label": "name",
+          "type": "string",
+          "value": "profile"
+        },
+        {
+          "label": "createdAt",
+          "type": "string",
+          "value": "createdAt",
+          "date_filter":[
+            "10 min",
+            "30 min",
+            "1 hour",
+            "3 hours",
+            "Older"
+          ]
+        },
+        {
+          "label": "priority",
+          "type": "number",
+          "value": "priority",
+          "list_filters":[
+            "Normal",
+            "Medium",
+            "High"
+          ]
+        },
+        {
+          "label": "claim",
+          "type": "href",
+          "value": "claim_call"
+        },
+        {
+          "label": "Transfer",
+          "type": "href",
+          "value": "Transfer"
+        }
+      ],
+      "rows": [
+
+        [
+          "0786dea6-0856-4f5d-92af-7dcc80800fab",
+          "waiting",
+          "voice",
+          "+25473892034",
+          "John Doe",
+          "2025-08-20T09:45:30Z",
+          2.2,
+          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
+           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+        ],
+        [
+          "27f9d3cf-5a68-4e45-b46e-adb5a961a01d",
+          "waiting",
+          "chat",
+          "+25473892034",
+          "John Doe",
+          "2025-08-20T15:30:00Z",
+          5.5,
+          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
+          "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+        ],
+        [
+          "28df2d46-cac2-4b1a-9b45-e5d143665851",
+          "waiting",
+          "voice",
+          "+25473892034",
+          "John Doe",
+          "2025-08-19T15:30:00Z",
+          6.9,
+          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
+           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+        ],
+        [
+          "3a409f8e-ae1e-4e2b-a7f5-347dc0593eb3",
+          "Returning",
+          "chat",
+          "+25473892034",
+          "John Doe",
+          "2025-08-19T15:30:00Z",
+          8.8,
+          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
+          "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+        ],
+        [
+          "4930f684-e3ca-47dc-8e79-f1acc531edae",
+          "waiting",
+          "voice",
+           "+25473892034",
+          "John Doe",
+          "2025-08-19T10:14:00Z",
+          2.1,
+          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
+           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+        ],
+        [
+          "5aeb9304-63f7-4265-a6e2-328a992eeaf4",
+          "waiting",
+          "mail",
+          "+25473892034",
+          "John Doe",
+          "2025-08-19T15:30:00Z",
+          8.3,
+          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
+           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+        ],
+        [
+          "6ad43a9b-52e4-48fa-afb0-2c4666750ab7",
+          "waiting",
+          "voice",
+          "+25478992034",
+          "John Doe",
+          "2025-08-19T15:30:00Z",
+          6.5,
+          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
+           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+        ],
+
+        [
+          "794eb5c8-ae09-4008-b3b8-d90b57c02845",
+          "waiting",
+          "voice",
+          "+25478892034",
+          "John Doe",
+          "2025-08-19T15:30:00Z",
+          2.7,
+          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
+           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+        ],
+        [
+          "bb5f1ff3-62f2-45ec-8b5e-df1dee4efec1",
+          "waiting",
+          "voice",
+          "+25473892034",
+          "John Doe",
+          "2025-08-19T15:30:00Z",
+          5.4,
+          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
+           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+        ]
+      ],
+      "lines": [],
+      "groups": [],
+      "data": [],
+      "min_id": 0,
+      "max_id": 0,
+      "row_count": 5
+    }
+  },
+  "action_id": 54,
+  "response_status": "00",
+  "overall_status": "00",
+  "last_response": ""
+}
