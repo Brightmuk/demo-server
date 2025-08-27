@@ -3,14 +3,14 @@ const WebSocket = require("ws");
 const fs = require("fs");
 const path = require("path");
 const PORT = 8080;
-
+const appetizers = require("./appetizers");
+const mockCalls = require("./calls")
 
 // ================== HTTP SERVER ==================
 
 
-// Mock function + data you already have
 function buildCallResponse(rows) {
-  return { calls: rows }; // replace with your real logic
+  return { calls: rows }; 
 }
 const mockRows = [{ id: 1, caller: "Alice", time: Date.now() }];
 
@@ -35,7 +35,9 @@ function loadJsonFromFile(filePath, res) {
 
 const server = http.createServer((req, res) => {
    if (req.url === "/appetizers") {
-   
+       res.status(200).json({
+        "appetizers": appetizers
+    })
 
   }
   let parts = req.url.split("/");
@@ -120,69 +122,7 @@ const server = http.createServer((req, res) => {
 // ================== CALLS SOCKET ==================
 const callsWSS = new WebSocket.Server({ noServer: true });
 
-// Initial mock rows for calls
-let mockCalls = [
-  [
-    "0786dea6-0856-4f5d-92af-7dcc80800fab",
-    "waiting",
-    "voice",
-    "+25473892034",
-    "Lukas Doe",
-    "2025-08-20T09:45:30Z",
-    2.2,
-    '{"url": "/CLAIM CALL/", "service": "CLAIM CALL", "params": {"contact_id": "id"}}',
-  ],
-  [
-    "3a409f8e-ae1e-4e2b-a7f5-347dc0593eb3",
-    "Returning",
-    "chat",
-    "+254731234567",
-    "Alice Smith",
-    "2025-08-19T15:30:00Z",
-    8.8,
-    '{"url": "/CLAIM CALL/", "service": "CLAIM CALL", "params": {"contact_id": "id"}}',
-  ],
-    [
-    "0786dea6-0856-4f5d-92af-7dcc80800fab",
-    "waiting",
-    "voice",
-    "+25478892034",
-    "John Doe",
-    "2025-08-20T09:45:30Z",
-    2.2,
-    '{"url": "/CLAIM CALL/", "service": "CLAIM CALL", "params": {"contact_id": "id"}}',
-  ],
-  [
-    "3a409f8e-ae1e-4e2b-a7f5-347dc0593eb3",
-    "Returning",
-    "chat",
-    "+254731234567",
-    "Benrie Doe",
-    "2025-08-19T15:30:00Z",
-    8.6,
-    '{"url": "/CLAIM CALL/", "service": "CLAIM CALL", "params": {"contact_id": "id"}}',
-  ],
-    [ 
-    "0786dea6-0856-4f5d-92af-7dcc80800fab",
-    "waiting",
-    "voice",
-    "+25478892034",
-    "Jacob Doe",
-    "2025-08-20T09:45:30Z",
-    4.2,
-    '{"url": "/CLAIM CALL/", "service": "CLAIM CALL", "params": {"contact_id": "id"}}',
-  ],
-  [
-    "3a409f8e-ae1e-4e2b-a7f5-347dc0593eb3",
-    "Returning",
-    "chat",
-    "+254731234567",
-    "Alice Smith",
-    "2025-08-19T15:30:00Z",
-    2.8,
-    '{"url": "/CLAIM CALL/", "service": "CLAIM CALL", "params": {"contact_id": "id"}}',
-  ],
-];
+
 
 // Helper: build call response
 function buildCallResponse(rows) {

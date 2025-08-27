@@ -150,3 +150,4 @@ var appetizers = [
     "calories": 340
   }
 ]
+export default appetizers;
