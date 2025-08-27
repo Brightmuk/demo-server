@@ -34,7 +34,10 @@ function loadJsonFromFile(filePath, res) {
 }
 
 const server = http.createServer((req, res) => {
-  
+   if (req.url === "/appetizers") {
+   
+
+  }
   let parts = req.url.split("/");
   let endpoint = parts[parts.length - 1];
 
