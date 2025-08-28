@@ -35,9 +35,11 @@ function loadJsonFromFile(filePath, res) {
 
 const server = http.createServer((req, res) => {
    if (req.url === "/appetizers") {
-       res.status(200).json({
+    res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({
         "appetizers": appetizers
-    })
+    }));
+       
 
   }
   let parts = req.url.split("/");

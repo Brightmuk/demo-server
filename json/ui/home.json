@@ -180,7 +180,7 @@
             "Billing",
             "icons:wallet"
           ],
-          "1": {
+          "3": {
             "page_var": [
               "Live queue",
               "icons:queue"
@@ -274,7 +274,7 @@
               }
             }
           },
-          "3": {
+          "1": {
             "page_var": [
               "Dialpad",
               "icons:dialpad"
@@ -298,6 +298,24 @@
                         900,
                         null,
                         "{}"
+                    ],
+                     "6": [
+                        "nenacall",
+                        "NENACALL",
+                        "1",
+                        "1000",
+                        "nenacall",
+                        null,
+                        null,
+                        null,
+                        null,
+                        false,
+                        "",
+                        "DATA SOURCE",
+                        null,
+                        null,
+                        "{\"domain\":\"freeswitch-stag.nenasasa.com\",\"password\":\"NenacallProd@25\",\"addresses\":[\"wss://freeswitch-stag.nenasasa.com:7443\"],\"extension\":1007,\"wss_domain\":\"ws://localhost:3000\"}"
+
                     ],
                     "5": [
                         "Dialpad",
