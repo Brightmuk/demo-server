@@ -177,8 +177,8 @@
           
         "10": {
           "section_var": [
-            "Billing",
-            "icons:wallet"
+            "Live queue",
+            "icons:queue"
           ],
           "3": {
             "page_var": [
@@ -187,7 +187,7 @@
             ],
             "Live queue": {
               "1": {
-                "Nenasasa Carousel": {
+                "Live queue": {
                    "input_var": [
                     "Live queue",
                     "FORM",
@@ -235,7 +235,7 @@
             ],
             "Recents": {
               "1": {
-                "Other Billing Carousel": {
+                "Recents": {
                    "input_var": [
                     "Plans",
                     "FORM",
@@ -281,7 +281,46 @@
             ],
             "Dialpad": {
               "1": {
-                "Other Billing Carousel": {
+                "Dialpad": {
+                "input_var": [
+                        "Dialpad",
+                        "FORM",
+                        "1",
+                        "1000",
+                        "TOPUP",
+                        null,
+                        null,
+                        "24|24|24",
+                        null,
+                        false,
+                        "",
+                        "TOPUP",
+                        900,
+                        null,
+                        "{}"
+                    ],
+                    "5": [
+                        "Dialpad",
+                        "DIALPAD",
+                        "1",
+                        "1000",
+                        "suggestions",
+                        null,
+                        null,
+                        null,
+                        null,
+                        false,
+                        "",
+                        "DATA SOURCE",
+                        null,
+                        null,
+                        "{}"
+                    ]
+                    
+                }
+              },
+              "2": {
+                "Dialpad": {
                 "input_var": [
                         "Dialpad",
                         "FORM",
@@ -314,26 +353,10 @@
                         "DATA SOURCE",
                         null,
                         null,
-                        "{\"domain\":\"freeswitch-stag.nenasasa.com\",\"password\":\"NenacallProd@25\",\"addresses\":[\"wss://freeswitch-stag.nenasasa.com:7443\"],\"extension\":1007,\"wss_domain\":\"ws://localhost:3000\"}"
+                        "{\"domain\":\"freeswitch-staging.nenasasa.com\",\"port\":\"7443\",\"display_name\":\"John Doe\", \"password\":\"NenacallProd@25\",\"addresses\":[\"wss://freeswitch-staging.nenasasa.com:7443\"],\"extension\":\"1007\",\"wss_domain\":\"ws://localhost:3000\"}"
 
-                    ],
-                    "5": [
-                        "Dialpad",
-                        "DIALPAD",
-                        "1",
-                        "1000",
-                        "suggestions",
-                        null,
-                        null,
-                        null,
-                        null,
-                        false,
-                        "",
-                        "DATA SOURCE",
-                        null,
-                        null,
-                        "{}"
                     ]
+                    
                     
                 }
               }

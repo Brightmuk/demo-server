@@ -11,23 +11,7 @@
                         "Chat": {
                             "2": {
                                 "Chat": {
-                                    "input_var": [
-                                        "Chat",
-                                        "FORM",
-                                        "1",
-                                        "1000",
-                                        "chat",
-                                        null,
-                                        null,
-                                        "24|24|24",
-                                        null,
-                                        false,
-                                        "",
-                                        "CHAT",
-                                        900,
-                                        null,
-                                        "{}"
-                                    ],
+                                    
                                     "5": [
                                         "Chat view",
                                         "CHAT",
@@ -114,5 +98,6 @@
                 }
             }
         }
-    }
+    },
+    "response_status": "00"
 }
