@@ -83,8 +83,8 @@
                                         "",
                                         "DATA SOURCE",
                                         null,
-                                        null,
-                                        "{}"
+                                        null, 
+                                        "{\"websocketUrl\": \"wss://demo-server-uzwr.onrender.com/messages\"}"
                                     ]
                                     
                                 }
