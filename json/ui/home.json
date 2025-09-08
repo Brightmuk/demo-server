@@ -11,7 +11,7 @@
         "role": "Adminstrator",
         "notification_channel": "5/notifications/4613230"
       },
-      "institution_id": 737,
+      "institution_id": 702,
       "logo": "",
       "icon_image": "",
       "name": "Eldoret Merchants Limited",
@@ -177,8 +177,8 @@
           
         "10": {
           "section_var": [
-            "Live queue",
-            "icons:queue"
+            "Nenacall home",
+            "icons:home"
           ],
           "3": {
             "page_var": [
@@ -207,7 +207,7 @@
                   ],
                   "3": [
                     "Live queue",
-                    "CALL QUEUE",
+                    "QUEUE PANEL",
                     "1",
                     "1000",
                     "call_queue",
@@ -220,7 +220,7 @@
                     "DATA SOURCE",
                     null,
                     null,
-                    "{\"websocketUrl\": \"wss://demo-server-uzwr.onrender.com/calls\"}"
+                    "{\"websocketUrl\": \"wss://gmsafiri-nenavoice-nenasasa.staging.interintel.co/ws/queue\"}"
                   ]
                 }
               }
@@ -320,9 +320,9 @@
                 }
               },
               "2": {
-                "Dialpad": {
+                "Nenacall": {
                 "input_var": [
-                        "Dialpad",
+                        "Nenacall Form",
                         "FORM",
                         "1",
                         "1000",
