@@ -2,10 +2,9 @@ const http = require("http");
 const WebSocket = require("ws");
 const fs = require("fs");
 const path = require("path");
-const PORT = 8080;
+const PORT = 8085;
 const appetizers = require("./appetizers");
 const mockCalls = require("./calls")
-
 // ================== HTTP SERVER ==================
 
 
@@ -34,14 +33,14 @@ function loadJsonFromFile(filePath, res) {
 }
 
 const server = http.createServer((req, res) => {
+  console.log("Received request:", req.method, req.url);
    if (req.url === "/appetizers") {
     res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({
         "appetizers": appetizers
     }));
-       
-
   }
+
   let parts = req.url.split("/");
   let endpoint = parts[parts.length - 1];
 

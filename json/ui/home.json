@@ -220,7 +220,7 @@
                     "DATA SOURCE",
                     null,
                     null,
-                    "{\"websocketUrl\": \"wss://gmsafiri-nenavoice-nenasasa.staging.interintel.co/ws/queue\"}"
+                    "{\"websocketUrl\":\"ws://192.168.0.127:8085/calls\",\"port\":\"7443\",\"display_name\":\"John Doe\", \"password\":\"NenacallProd@25\",\"addresses\":[\"wss://freeswitch-staging.nenasasa.com:7443\"],\"extension\":\"1007\",\"wss_domain\":\"ws://localhost:3000\"}"
                   ]
                 }
               }
@@ -280,7 +280,7 @@
               "icons:dialpad"
             ],
             "Dialpad": {
-              "1": {
+              "2": {
                 "Dialpad": {
                 "input_var": [
                         "Dialpad",
@@ -319,7 +319,7 @@
                     
                 }
               },
-              "2": {
+             "1": {
                 "Nenacall": {
                 "input_var": [
                         "Nenacall Form",
@@ -359,7 +359,7 @@
                     
                     
                 }
-              }
+              } 
             }
           }
         }

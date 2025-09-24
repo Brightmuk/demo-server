@@ -75,104 +75,87 @@
 
         [
           "0786dea6-0856-4f5d-92af-7dcc80800fab",
-          "waiting",
+          
           "voice",
           "+25473892034",
+           "2025-08-20T09:45:30Z",
           "John Doe",
-          "2025-08-20T09:45:30Z",
           2.2,
           "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
            "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
         ],
         [
           "27f9d3cf-5a68-4e45-b46e-adb5a961a01d",
-          "waiting",
+          
           "chat",
           "+25473892034",
-          "John Doe",
           "2025-08-20T15:30:00Z",
+          "John Doe",
+          
           5.5,
           "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
         ],
         [
           "28df2d46-cac2-4b1a-9b45-e5d143665851",
-          "waiting",
+          
           "voice",
           "+25473892034",
-          "John Doe",
           "2025-08-19T15:30:00Z",
+          "John Doe",
+          
           6.9,
           "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
            "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
         ],
         [
           "3a409f8e-ae1e-4e2b-a7f5-347dc0593eb3",
-          "Returning",
+          
           "chat",
           "+25473892034",
-          "John Doe",
           "2025-08-19T15:30:00Z",
+          "John Doe",
+          
           8.8,
           "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
         ],
         [
           "4930f684-e3ca-47dc-8e79-f1acc531edae",
-          "waiting",
+          
           "voice",
            "+25473892034",
+           "2025-08-19T10:14:00Z",
           "John Doe",
-          "2025-08-19T10:14:00Z",
+          
           2.1,
           "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
            "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
         ],
         [
           "5aeb9304-63f7-4265-a6e2-328a992eeaf4",
-          "waiting",
+          
           "mail",
           "+25473892034",
-          "John Doe",
           "2025-08-19T15:30:00Z",
+          "John Doe",
           8.3,
           "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
            "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
         ],
         [
           "6ad43a9b-52e4-48fa-afb0-2c4666750ab7",
-          "waiting",
+          
           "voice",
           "+25478992034",
-          "John Doe",
           "2025-08-19T15:30:00Z",
+          "John Doe",
+          
           6.5,
           "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
            "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
-        ],
-
-        [
-          "794eb5c8-ae09-4008-b3b8-d90b57c02845",
-          "waiting",
-          "voice",
-          "+25478892034",
-          "John Doe",
-          "2025-08-19T15:30:00Z",
-          2.7,
-          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
-           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
-        ],
-        [
-          "bb5f1ff3-62f2-45ec-8b5e-df1dee4efec1",
-          "waiting",
-          "voice",
-          "+25473892034",
-          "John Doe",
-          "2025-08-19T15:30:00Z",
-          5.4,
-          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
-           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
         ]
+
       ],
       "lines": [],
       "groups": [],
