@@ -353,7 +353,7 @@
                         "DATA SOURCE",
                         null,
                         null,
-                        "{\"domain\":\"freeswitch-stag.nenasasa.com\",\"port\":\"7443\",\"display_name\":\"John Doe\", \"password\":\"NenacallProd@25\",\"addresses\":[\"wss://freeswitch-stag.nenasasa.com:7443\"],\"extension\":\"1005\",\"wss_domain\":\"ws://localhost:3000\"}"
+                        "{\"domain\":\"freeswitch-stag.nenasasa.com\",\"port\":\"7443\",\"display_name\":\"John Doe\", \"password\":\"a828ea12-e142-4193-9204-2ef66642d18e\",\"addresses\":[\"wss://freeswitch-stag.nenasasa.com:7443\"],\"extension\":\"1005\",\"wss_domain\":\"ws://localhost:3000\"}"
 
                     ]
                     
