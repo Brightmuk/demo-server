@@ -8,10 +8,6 @@ const mockCalls = require("./calls")
 // ================== HTTP SERVER ==================
 
 
-function buildCallResponse(rows) {
-  return { calls: rows }; 
-}
-const mockRows = [{ id: 1, caller: "Alice", time: Date.now() }];
 
 // Utility: load JSON file safely
 function loadJsonFromFile(filePath, res) {
@@ -34,10 +30,10 @@ function loadJsonFromFile(filePath, res) {
 
 const server = http.createServer((req, res) => {
   console.log("Received request:", req.method, req.url);
-   if (req.url === "/appetizers") {
+  if (req.url === "/appetizers") {
     res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({
-        "appetizers": appetizers
+    res.end(JSON.stringify({
+      "appetizers": appetizers
     }));
   }
 
@@ -49,72 +45,72 @@ const server = http.createServer((req, res) => {
   console.log("Resolved endpoint:", endpoint);
 
   console.log(endpoint)
-    switch (endpoint) {
-      case "HOME":
-      case "LANDING PAGE":
-        return loadJsonFromFile("json/ui/home.json", res);
-      case "CALL HISTORY":
-        return loadJsonFromFile("json/ui/call_history.json", res);
-      case "CHAT":
-        return loadJsonFromFile("json/ui/chat.json", res);
-      case "ACTIVE PLAN":
-        return loadJsonFromFile("json/ui/active_plan.json", res);
-      case "BILLING HISTORY":
-        return loadJsonFromFile("json/ui/billing_history.json", res);
-      case "USAGE OVERVIEW":
-        return loadJsonFromFile("json/ui/usage_overview.json", res);
-      case "SUBSCRIPTION PLANS":
-        return loadJsonFromFile("json/ui/subscription_plans.json", res);
-      case "LANDING PAGE":
-        return loadJsonFromFile("json/ui/landing.json", res);
+  switch (endpoint) {
+    case "HOME":
+    case "LANDING PAGE":
+      return loadJsonFromFile("json/ui/home.json", res);
+    case "CALL HISTORY":
+      return loadJsonFromFile("json/ui/call_history.json", res);
+    case "CHAT":
+      return loadJsonFromFile("json/ui/chat.json", res);
+    case "ACTIVE PLAN":
+      return loadJsonFromFile("json/ui/active_plan.json", res);
+    case "BILLING HISTORY":
+      return loadJsonFromFile("json/ui/billing_history.json", res);
+    case "USAGE OVERVIEW":
+      return loadJsonFromFile("json/ui/usage_overview.json", res);
+    case "SUBSCRIPTION PLANS":
+      return loadJsonFromFile("json/ui/subscription_plans.json", res);
+    case "LANDING PAGE":
+      return loadJsonFromFile("json/ui/landing.json", res);
 
-      case "DATA SOURCE": {
-        // Collect request body for POST
-        let body = "";
-        req.on("data", (chunk) => {
-          body += chunk.toString();
-        });
-        req.on("end", () => {
-          let dataName;
-          try {
-            dataName = JSON.parse(body).data_name;
-          } catch (err) {
-            res.writeHead(400, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify({ error: "Invalid JSON body" }));
-          }
-          console.log(dataName)
-          switch (dataName) {
-            case "txns data viz":
-            case "call_history":
-              return loadJsonFromFile("json/data/call_history_data.json", res);
-            case "call_queue":
-              return loadJsonFromFile("json/data/call_queue_data.json", res);
-            case "suggestions":
-              return loadJsonFromFile("json/data/suggestions_data.json", res);
-            case "incoming_call_queue":
-              return loadJsonFromFile("json/data/call_queue_data.json", res);
-            case "chat":
-              return loadJsonFromFile("json/data/chat_data.json", res);
-            case "subscription_plans":
-              return loadJsonFromFile("json/data/subscription_plans_data.json", res);
-            case "active_plan":
-              return loadJsonFromFile("json/data/active_plan_data.json", res);
-            case "billing_history":
-              return loadJsonFromFile("json/data/billing_history_data.json", res);
-            case "usage_overview":
-              return loadJsonFromFile("json/data/usage_overview_data.json", res);
-            default:
-              return loadJsonFromFile("json/data/txns_data.json", res);
-          }
-        });
-        break;
-      }
-
-      default:
-        res.writeHead(404, { "Content-Type": "text/plain" });
-        res.end("Not Found");
+    case "DATA SOURCE": {
+      // Collect request body for POST
+      let body = "";
+      req.on("data", (chunk) => {
+        body += chunk.toString();
+      });
+      req.on("end", () => {
+        let dataName;
+        try {
+          dataName = JSON.parse(body).data_name;
+        } catch (err) {
+          res.writeHead(400, { "Content-Type": "application/json" });
+          return res.end(JSON.stringify({ error: "Invalid JSON body" }));
+        }
+        console.log(dataName)
+        switch (dataName) {
+          case "txns data viz":
+          case "call_history":
+            return loadJsonFromFile("json/data/call_history_data.json", res);
+          case "call_queue":
+            return loadJsonFromFile("json/data/call_queue_data.json", res);
+          case "suggestions":
+            return loadJsonFromFile("json/data/suggestions_data.json", res);
+          case "incoming_call_queue":
+            return loadJsonFromFile("json/data/call_queue_data.json", res);
+          case "chat":
+            return loadJsonFromFile("json/data/chat_data.json", res);
+          case "subscription_plans":
+            return loadJsonFromFile("json/data/subscription_plans_data.json", res);
+          case "active_plan":
+            return loadJsonFromFile("json/data/active_plan_data.json", res);
+          case "billing_history":
+            return loadJsonFromFile("json/data/billing_history_data.json", res);
+          case "usage_overview":
+            return loadJsonFromFile("json/data/usage_overview_data.json", res);
+          default:
+            return loadJsonFromFile("json/data/txns_data.json", res);
+        }
+      });
+      break;
     }
-  
+
+    default:
+      res.writeHead(404, { "Content-Type": "text/plain" });
+      res.end("Not Found");
+  }
+
 });
 
 
@@ -128,27 +124,111 @@ const callsWSS = new WebSocket.Server({ noServer: true });
 // Helper: build call response
 function buildCallResponse(rows) {
   return {
-    response: {
-      subdomain_details: "Subdomain Details Updated",
-      get_profile: "Session Profile Captured",
-      data_source: {
-        cols: [
-          { label: "id", type: "string", value: "source_id" },
-          { label: "status", type: "string", value: "status" },
-          { label: "channel", type: "string", value: "channel" },
-          { label: "phone", type: "string", value: "profile" },
-          { label: "name", type: "string", value: "profile" },
-          { label: "createdAt", type: "string", value: "createdAt" },
-          { label: "priority", type: "number", value: "priority" },
-          { label: "claim", type: "href", value: "claim_call" },
-        ],
-        rows,
-        row_count: rows.length,
+    type: "queue_update",
+    payload: {
+      "response": {
+
+        "subdomain_details": "Subdomain Details Updated",
+        "get_profile": "Session Profile Captured",
+        "data_source": {
+          "cols": [
+            {
+              "label": "sessionId",
+              "type": "string",
+              "value": "sessionId"
+            },
+            {
+              "label": "channel",
+              "type": "string",
+              "value": "channel",
+              "list_filters": [
+                "voice",
+                "chat",
+                "Whatsapp",
+                "Mail",
+                "SMS"
+              ]
+            },
+            {
+              "label": "phone",
+              "type": "string",
+              "value": "phone",
+              "search_filters": true
+            },
+            {
+              "label": "name",
+              "type": "string",
+              "value": "name"
+            },
+            {
+              "label": "createdAt",
+              "type": "datetime",
+              "value": "createdAt"
+            },
+            {
+              "label": "status",
+              "type": "string",
+              "value": "status"
+            },
+            {
+              "label": "priority",
+              "type": "string",
+              "value": "priority"
+            },
+            {
+              "label": "waiting",
+              "type": "string",
+              "value": "waiting"
+            },
+            {
+              "label": "claimed",
+              "type": "string",
+              "value": "claimed"
+            },
+            {
+              "label": "Claim",
+              "type": "href",
+              "value": "Claim"
+            },
+            {
+              "label": "Transfer",
+              "type": "href",
+              "value": "Transfer"
+            },
+            {
+              "label": "Cancel",
+              "type": "href",
+              "value": "Cancel"
+            },
+            {
+              "label": "domain",
+              "type": "string",
+              "value": "domain"
+            },
+            {
+              "label": "token",
+              "type": "string",
+              "value": "token"
+            },
+            {
+              "label": "isDuplicatePhone",
+              "type": "boolean",
+              "value": "isDuplicatePhone"
+            }
+          ],
+          "rows": rows,
+          "lines": [],
+          "groups": [],
+          "data": [],
+          "min_id": 0,
+          "max_id": 0,
+          "row_count": 5
+        }
       },
-    },
-    action_id: 54,
-    response_status: "00",
-    overall_status: "00",
+      action_id: 54,
+      response_status: "00",
+      overall_status: "00",
+    }
   };
 }
 
@@ -166,9 +246,7 @@ callsWSS.on("connection", (ws) => {
 
   const interval = setInterval(() => {
     const randomIndex = Math.floor(Math.random() * mockCalls.length);
-    mockCalls[randomIndex][1] = Math.random() > 0.5 ? "waiting" : "Returning";
-    mockCalls[randomIndex][5] = new Date().toISOString();
-    mockCalls[randomIndex][6] = (Math.random() * 10).toFixed(1);
+    mockCalls[randomIndex][4] = new Date().toISOString();
 
     console.log(`🔄 Updated call row at index ${randomIndex}`);
     broadcastCalls(buildCallResponse(mockCalls));
@@ -220,6 +298,6 @@ server.on("upgrade", (req, socket, head) => {
 server.listen(PORT, () => {
   console.log(`✅ Http Server running on http://{baseurl}:${PORT}`);
   console.log(`   WS -> ws://{baseurl}:${PORT}/`);
-  
+
 });
 

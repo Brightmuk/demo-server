@@ -220,7 +220,7 @@
                     "DATA SOURCE",
                     null,
                     null,
-                    "{\"websocketUrl\":\"ws://192.168.0.127:8085/calls\",\"port\":\"7443\",\"display_name\":\"John Doe\", \"password\":\"NenacallProd@25\",\"addresses\":[\"wss://freeswitch-staging.nenasasa.com:7443\"],\"extension\":\"1007\",\"wss_domain\":\"ws://localhost:3000\"}"
+                    "{\"websocketUrl\":\"wss://gmsafiri-nenavoice-nenasasa.staging.interintel.co/ws/queue\",\"port\":\"7443\",\"display_name\":\"John Doe\", \"password\":\"NenacallProd@25\",\"addresses\":[\"wss://freeswitch-staging.nenasasa.com:7443\"],\"extension\":\"1005\",\"wss_domain\":\"ws://localhost:3000\"}"
                   ]
                 }
               }
@@ -323,7 +323,7 @@
                 "Nenacall": {
                 "input_var": [
                         "Nenacall Form",
-                        "FORM",
+                        "NENACALL",
                         "1",
                         "1000",
                         "TOPUP",
@@ -353,7 +353,7 @@
                         "DATA SOURCE",
                         null,
                         null,
-                        "{\"domain\":\"freeswitch-staging.nenasasa.com\",\"port\":\"7443\",\"display_name\":\"John Doe\", \"password\":\"NenacallProd@25\",\"addresses\":[\"wss://freeswitch-staging.nenasasa.com:7443\"],\"extension\":\"1007\",\"wss_domain\":\"ws://localhost:3000\"}"
+                        "{\"domain\":\"freeswitch-stag.nenasasa.com\",\"port\":\"7443\",\"display_name\":\"John Doe\", \"password\":\"NenacallProd@25\",\"addresses\":[\"wss://freeswitch-stag.nenasasa.com:7443\"],\"extension\":\"1005\",\"wss_domain\":\"ws://localhost:3000\"}"
 
                     ]
                     

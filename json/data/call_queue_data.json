@@ -1,14 +1,42 @@
 {
   "response": {
-    "type": "full_update",
+    
     "subdomain_details": "Subdomain Details Updated",
     "get_profile": "Session Profile Captured",
     "data_source": {
       "cols": [
         {
-          "label": "id",
+          "label": "sessionId",
           "type": "string",
-          "value": "source_id"
+          "value": "sessionId"
+        },
+        {
+          "label": "channel",
+          "type": "string",
+          "value": "channel",
+          "list_filters": [
+            "voice",
+            "chat",
+            "Whatsapp",
+            "Mail",
+            "SMS"
+          ]
+        },
+        {
+          "label": "phone",
+          "type": "string",
+          "value": "phone",
+          "search_filters": true
+        },
+        {
+          "label": "name",
+          "type": "string",
+          "value": "name"
+        },
+        {
+          "label": "createdAt",
+          "type": "datetime",
+          "value": "createdAt"
         },
         {
           "label": "status",
@@ -16,146 +44,86 @@
           "value": "status"
         },
         {
-          "label": "channel",
-          "type": "string",
-          "value": "channel",
-          "list_filters":[
-                  "voice",
-                  "chat",
-                  "Whatsapp",
-                  "Mail",
-                  "SMS"
-          ]
-        },
-        {
-          "label": "phone",
-          "type": "string",
-          "value": "profile",
-          "search_filters":true
-        },
-        {
-          "label": "name",
-          "type": "string",
-          "value": "profile"
-        },
-        {
-          "label": "createdAt",
-          "type": "string",
-          "value": "createdAt",
-          "date_filter":[
-            "10 min",
-            "30 min",
-            "1 hour",
-            "3 hours",
-            "Older"
-          ]
-        },
-        {
           "label": "priority",
-          "type": "number",
-          "value": "priority",
-          "list_filters":[
-            "Normal",
-            "Medium",
-            "High"
-          ]
+          "type": "string",
+          "value": "priority"
         },
         {
-          "label": "claim",
+          "label": "waiting",
+          "type": "string",
+          "value": "waiting"
+        },
+        {
+          "label": "claimed",
+          "type": "string",
+          "value": "claimed"
+        },
+        {
+          "label": "Claim",
           "type": "href",
-          "value": "claim_call"
+          "value": "Claim"
         },
         {
           "label": "Transfer",
           "type": "href",
           "value": "Transfer"
+        },
+        {
+          "label": "Cancel",
+          "type": "href",
+          "value": "Cancel"
+        },
+        {
+          "label": "domain",
+          "type": "string",
+          "value": "domain"
+        },
+        {
+          "label": "token",
+          "type": "string",
+          "value": "token"
+        },
+        {
+          "label": "isDuplicatePhone",
+          "type": "boolean",
+          "value": "isDuplicatePhone"
         }
       ],
       "rows": [
-
         [
-          "0786dea6-0856-4f5d-92af-7dcc80800fab",
-          
-          "voice",
-          "+25473892034",
-           "2025-08-20T09:45:30Z",
-          "John Doe",
-          2.2,
-          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
-           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
-        ],
-        [
-          "27f9d3cf-5a68-4e45-b46e-adb5a961a01d",
-          
+          "39645a15-28bf-47c5-ac22-5e5039126927",
           "chat",
-          "+25473892034",
-          "2025-08-20T15:30:00Z",
-          "John Doe",
-          
-          5.5,
-          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
-          "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+          "+254792049583",
+          "sadhsadyasyut",
+          "2025-09-24T07:37:55.547405+00:00",
+          "waiting",
+          "Normal",
+          "5m 42s",
+          "false",
+          "{\"url\": \"/ACTION/CLAIM/\", \"service\": \"CLAIM_SESSION\", \"icon\": \"icons:check\", \"params\": {\"session_id\": \"39645a15-28bf-47c5-ac22-5e5039126927\", \"channel\": \"chat\"}}",
+          null,
+          null,
+          "interintel.eu",
+          "v1|1758699818|39645a15-28bf-47c5-ac22-5e5039126927|interintel.eu|5b5c0c62f78a1a09e61fd090a6df0e985eac9a8ed78a2c90fa5b33936f54eb85",
+          false
         ],
         [
-          "28df2d46-cac2-4b1a-9b45-e5d143665851",
-          
-          "voice",
-          "+25473892034",
-          "2025-08-19T15:30:00Z",
-          "John Doe",
-          
-          6.9,
-          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
-           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
-        ],
-        [
-          "3a409f8e-ae1e-4e2b-a7f5-347dc0593eb3",
-          
+          "39645a15-28bf-47c5-ac22-5e5039126928",
           "chat",
-          "+25473892034",
-          "2025-08-19T15:30:00Z",
-          "John Doe",
-          
-          8.8,
-          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
-          "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
-        ],
-        [
-          "4930f684-e3ca-47dc-8e79-f1acc531edae",
-          
-          "voice",
-           "+25473892034",
-           "2025-08-19T10:14:00Z",
-          "John Doe",
-          
-          2.1,
-          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
-           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
-        ],
-        [
-          "5aeb9304-63f7-4265-a6e2-328a992eeaf4",
-          
-          "mail",
-          "+25473892034",
-          "2025-08-19T15:30:00Z",
-          "John Doe",
-          8.3,
-          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
-           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
-        ],
-        [
-          "6ad43a9b-52e4-48fa-afb0-2c4666750ab7",
-          
-          "voice",
-          "+25478992034",
-          "2025-08-19T15:30:00Z",
-          "John Doe",
-          
-          6.5,
-          "{\"url\": \"/CLAIM CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}",
-           "{\"url\": \"/TRANSFER CALL/\", \"service\": \"CLAIM CALL\",  \"params\": {\"contact_id\": \"id\"}}"
+          "+254791610102",
+          "sadhsadyasyut",
+          "2025-09-24T07:37:55.547405+00:00",
+          "terminated",
+          "Normal",
+          "5m 42s",
+          "false",
+          "{\"url\": \"/ACTION/CLAIM/\", \"service\": \"CLAIM_SESSION\", \"icon\": \"icons:check\", \"params\": {\"session_id\": \"39645a15-28bf-47c5-ac22-5e5039126927\", \"channel\": \"chat\"}}",
+          null,
+          null,
+          "interintel.eu",
+          "v1|1758699818|39645a15-28bf-47c5-ac22-5e5039126927|interintel.eu|5b5c0c62f78a1a09e61fd090a6df0e985eac9a8ed78a2c90fa5b33936f54eb85",
+          false
         ]
-
       ],
       "lines": [],
       "groups": [],
