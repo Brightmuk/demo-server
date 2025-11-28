@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "ke.co.interintel.nenastream",
+      "sha256_cert_fingerprints": [
+        "BF:0A:05:E6:15:31:68:8D:30:D6:9D:A0:5D:6B:E8:05:39:D9:3D:FB:6F:D0:F5:D8:3E:01:A2:0C:3E:0A:0F:33",
+        "2A:37:E0:F0:D4:9C:43:60:1D:26:5C:81:CF:A4:AE:6C:11:EB:AC:4A:55:AB:C1:3D:CF:79:C9:4B:F8:8F:95:83"
+      ]
+    }
+  }
+]

@@ -16,19 +16,19 @@ wss.on('connection', (socket) => {
     console.log(JSON.stringify(data, null, 2));
     // Handle different Verto methods
     switch (data.method) {
-      case 'verto.invite':
+      case 'invite':
         handleInvite(data, socket);
         break;
 
-      case 'verto.answer':
+      case 'answer':
         handleAnswer(data, socket);
         break;
 
-      case 'verto.media':
+      case 'media':
         handleMedia(data, socket);
         break;
 
-      case 'verto.bye':
+      case 'bye':
         handleBye(data, socket);
         break;
     case 'login':

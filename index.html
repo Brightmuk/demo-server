@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Redirect POC</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; background:#f7fafc; }
+    .card { background:white; padding:24px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.08); width: 380px; max-width:90%; text-align:center; }
+    h1 { margin:0 0 8px; font-size:20px; }
+    p { margin:8px 0 16px; color:#444; }
+    .count { font-weight:700; font-size:28px; color:#ef6c00; margin-bottom:12px; }
+    .controls button { margin:6px; padding:8px 12px; border-radius:8px; border:1px solid #ddd; cursor:pointer; background:#fff; }
+    .controls button.primary { background:#ef6c00; color:white; border:none; }
+    .info { margin-top:14px; font-size:12px; color:#666; text-align:left; }
+    label { display:block; margin-top:12px; text-align:left; font-size:13px; color:#333; }
+    input[type="text"], input[type="number"] { width:100%; padding:8px; margin-top:6px; box-sizing:border-box; border-radius:6px; border:1px solid #ddd; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Redirect Proof-of-Concept</h1>
+    <p>This page will redirect after the countdown below.</p>
+
+    <div class="count" id="countdown">10</div>
+
+    <div class="controls">
+      <button id="cancelBtn">Cancel</button>
+      <button id="nowBtn" class="primary">Redirect Now</button>
+    </div>
+
+    <label>Target URL (change me):</label>
+    <input id="targetInput" type="text"
+           value="https://timon-mipay.staging.interintel.co/payments/mobile/redirect?reference_id=9h2in97h23bfihb" />
+
+    <label>Delay seconds:</label>
+    <input id="delayInput" type="number" min="0" value="5" />
+
+    <div class="info">
+      <p><strong>Notes</strong>:</p>
+      <ul>
+        <li>Use a custom scheme like <code>myapp://callback?token=xyz</code> to test app deep-linking (app must be registered to handle the scheme).</li>
+        <li>If you want the browser to open the app using an HTTPS URL, you must configure <em>App Links</em> / <em>Universal Links</em> on the domain and app.</li>
+        <li>On desktop browsers, custom schemes may prompt or be blocked — behavior differs by OS and browser.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const countdownEl = document.getElementById('countdown');
+      const cancelBtn = document.getElementById('cancelBtn');
+      const nowBtn = document.getElementById('nowBtn');
+      const targetInput = document.getElementById('targetInput');
+      const delayInput = document.getElementById('delayInput');
+
+      let timer = null;
+      let timeLeft = parseInt(delayInput.value, 10) || 10;
+
+      function startTimer() {
+        clearInterval(timer);
+        timeLeft = parseInt(delayInput.value, 10) || 10;
+        countdownEl.textContent = timeLeft;
+        timer = setInterval(() => {
+          timeLeft -= 1;
+          countdownEl.textContent = timeLeft;
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            performRedirect();
+          }
+        }, 1000);
+      }
+
+      function performRedirect() {
+        const target = targetInput.value.trim();
+        if (!target) {
+          alert('Please set a target URL.');
+          return;
+        }
+
+        // For browsers, assigning window.location.href will navigate.
+        // If the target is a custom scheme and an app is registered on the device,
+        // the OS may prompt and open the app.
+        console.log('Redirecting to:', target);
+        window.location.href = target;
+
+        // Optional: also try opening in a brief iframe to improve custom-scheme behavior on some platforms
+        // (note: this is optional and can be removed)
+        try {
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = target;
+          document.body.appendChild(iframe);
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+          }, 2000);
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      cancelBtn.addEventListener('click', () => {
+        clearInterval(timer);
+        countdownEl.textContent = 'Cancelled';
+      });
+
+      nowBtn.addEventListener('click', () => {
+        clearInterval(timer);
+        performRedirect();
+      });
+
+      // Restart timer whenever delayInput changes
+      delayInput.addEventListener('change', startTimer);
+
+      // Start on load
+      startTimer();
+    })();
+  </script>
+</body>
+</html>
