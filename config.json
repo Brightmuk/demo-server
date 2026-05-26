@@ -1,0 +1,108 @@
+[
+    {
+        "id": "c0a80101-0000-0000-0750-000000000003",
+        "processName": "alacrity",
+        "isEnabled": true,
+        "targets": [
+            {
+                "id": "c0a80102-0000-0000-0050-000000000203",
+                "targetType": "Input",
+                "selectors": [
+                    {
+                        "type": "Role",
+                        "operator": "Equals",
+                        "value": "AXTextArea"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "ecae5680-852d-41be-a03f-eee54cb2a87c",
+        "processName": "iterm2",
+        "isEnabled": true,
+        "targets": [
+            {
+                "id": "0ac33c02-a765-471e-9d22-8dee7d075536",
+                "targetType": "Input",
+                "selectors": [
+                    {
+                        "type": "Role",
+                        "operator": "Equals",
+                        "value": "AXTextArea"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "c0a80101-0000-0000-0000-000000000001",
+        "processName": "slack",
+        "isEnabled": true,
+        "targets": [
+            {
+                "id": "c0a80101-0000-0000-0000-000000000003",
+                "targetType": "Submit",
+                "selectors": [
+                    {
+                        "type": "Description",
+                        "operator": "Equals",
+                        "value": "Send now"
+                    }
+                ]
+            },
+            {
+                "id": "c0a80101-0000-0000-0000-000000000002",
+                "targetType": "Input",
+                "selectors": [
+                    {
+                        "type": "DOMClass",
+                        "operator": "Contains",
+                        "value": "ql-editor"
+                    },
+                    {
+                        "type": "Role",
+                        "operator": "Equals",
+                        "value": "AXTextArea"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "c0a80101-0000-0000-0000-000000000008",
+        "processName": "terminal",
+        "isEnabled": true,
+        "targets": [
+            {
+                "id": "c0a80101-0000-0000-0010-000000000009",
+                "targetType": "Input",
+                "selectors": [
+                    {
+                        "type": "Role",
+                        "operator": "Equals",
+                        "value": "AXTextArea"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "c0a80101-0000-0000-0700-400000000008",
+        "processName": "warp",
+        "isEnabled": true,
+        "targets": [
+            {
+                "id": "c0a80101-0000-0000-0010-090002000009",
+                "targetType": "Input",
+                "selectors": [
+                    {
+                        "type": "Role",
+                        "operator": "Equals",
+                        "value": "AXTextArea"
+                    }
+                ]
+            }
+        ]
+    }
+]
